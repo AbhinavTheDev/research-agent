@@ -1,0 +1,27 @@
+# Core dependencies
+fastapi>=0.103.1
+uvicorn>=0.23.2
+pydantic>=2.3.0
+python-dotenv>=1.0.0
+
+# Web and async utilities
+httpx>=0.25.0
+
+# LangChain dependencies
+langchain>=0.0.300
+langchain-core>=0.1.4
+langsmith>=0.0.65
+langgraph>=0.0.23
+langchain-community>=0.3.21
+langchain-groq>=0.3.2
+
+# Search API clients
+exa-py>=0.6.1
+tavily-python>=0.2.1
+linkup-sdk>=0.2.4
+duckduckgo-search>=3.9.9
+
+# Utility
+aiohttp>=3.8.6
+beautifulsoup4>=4.12.2
+requests>=2.31.0

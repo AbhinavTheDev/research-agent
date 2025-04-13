@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 250, 250, 250;
+  --background-end-rgb: 240, 240, 240;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 10, 10, 10;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      rgb(var(--background-start-rgb)),
+      rgb(var(--background-end-rgb))
+    );
+}
+
+/* Animation utility classes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Prose (for markdown) utilities */
+.prose {
+  max-width: 65ch;
+  @apply text-gray-900 dark:text-gray-100;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  @apply text-gray-900 dark:text-white font-bold my-4;
+}
+
+.prose h1 {
+  @apply text-2xl;
+}
+
+.prose h2 {
+  @apply text-xl;
+}
+
+.prose h3 {
+  @apply text-lg;
+}
+
+.prose p {
+  @apply my-4;
+}
+
+.prose ul, .prose ol {
+  @apply my-4 pl-8;
+}
+
+.prose ul {
+  @apply list-disc;
+}
+
+.prose ol {
+  @apply list-decimal;
+}
+
+.prose code {
+  @apply px-1 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-sm;
+}
+
+.prose pre {
+  @apply p-4 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-auto my-4;
+}
+
+.prose blockquote {
+  @apply pl-4 border-l-4 border-gray-300 dark:border-gray-700 italic;
+}
+
+.prose a {
+  @apply text-blue-600 dark:text-blue-400 hover:underline;
+}
+
+/* Table styles for Markdown content */
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0;
+}
+
+.prose th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+
+.prose th, .prose td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+@media (prefers-color-scheme: dark) {
+  .prose th {
+    background-color: #1f2937;
+  }
+  
+  .prose th, .prose td {
+    border-color: #374151;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  header, footer, form, .animate-pulse, button, [role="button"] {
+    display: none !important;
+  }
+  
+  main {
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  section {
+    box-shadow: none !important;
+    border: none !important;
+  }
+  
+  .prose {
+    max-width: 100% !important;
+  }
+  
+  .prose h1 {
+    font-size: 24pt !important;
+    margin-bottom: 12pt !important;
+  }
+  
+  .prose h2 {
+    font-size: 18pt !important;
+    margin-top: 16pt !important;
+  }
+  
+  .prose table {
+    page-break-inside: avoid;
+  }
+}
