@@ -8,7 +8,7 @@
 
 | Demo Video                                                                                                                                                        | Blog Post                                                                 |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
-| [![YouTube](https://i9.ytimg.com/vi_webp/-2Rs2kjHpQY/mqdefault.webp?v=67fb9a60&sqp=COC77r8G&rs=AOn4CLBTb0oq2omwNtCoKAf6bwWJw0NjCw)](https://youtu.be/-2Rs2kjHpQY) | [![Blog](https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F54fuux8vwzufyrbf0v7i.png)](https://dev.to/abhinav-writes/ai-the-research-companion-mj9) |
+| [![YouTube](https://i.ytimg.com/vi/-2Rs2kjHpQY/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCmCQ3LlqJLCwl1PiY7EQBWMG8zBQ)](https://youtu.be/-2Rs2kjHpQY) | [![Blog](https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F54fuux8vwzufyrbf0v7i.png)](https://dev.to/abhinav-writes/ai-the-research-companion-mj9) |
 
 ### :hammer_and_wrench: Tech Stack
 
