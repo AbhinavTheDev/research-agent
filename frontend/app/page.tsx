@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({ subsets: ['latin'] });
 // Types
 interface ReportRequest {
   topic: string;
-  config_overrides?: Record<string, any>;
+  config_overrides?: Record<string, unknown>;
 }
 
 interface ReportResponse {
@@ -31,20 +31,6 @@ const thoughtStages = [
   { text: "Finalizing report...", details: "Formatting the report and preparing the final document" },
 ];
 
-// Interesting facts to display during loading to keep users engaged
-const loadingFacts = [
-  "Our AI can process information from thousands of research papers in minutes.",
-  "This report is being generated with advanced natural language processing techniques.",
-  "The AI searches for information across multiple reliable sources to ensure accuracy.",
-  "Each report is unique and tailored to your specific query.",
-  "Our system uses similar techniques to those that power academic research tools.",
-  "Deep research involves analyzing multiple perspectives on complex topics.",
-  "The AI continually refines its understanding as it gathers more information.",
-  "Reports are structured to provide both overview and detailed information.",
-  "The system evaluates the credibility of sources before including information.",
-  "Complex topics typically involve synthesizing information from multiple fields.",
-];
-
 export default function Home() {
   const [topic, setTopic] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +38,6 @@ export default function Home() {
   const [report, setReport] = useState<ReportResponse | null>(null);
   const [currentStage, setCurrentStage] = useState(0);
   const [processingTime, setProcessingTime] = useState(0);
-  const [currentFact, setCurrentFact] = useState(0);
 
   // Timer to update processing time and rotate through thought stages during loading
   useEffect(() => {
@@ -66,11 +51,6 @@ export default function Home() {
         // Every 10 seconds, move to next thought stage (simulating progress)
         if (processingTime > 0 && processingTime % 10 === 0 && currentStage < thoughtStages.length - 1) {
           setCurrentStage(prev => prev + 1);
-        }
-        
-        // Every 8 seconds, show a new interesting fact
-        if (processingTime > 0 && processingTime % 8 === 0) {
-          setCurrentFact(prev => (prev + 1) % loadingFacts.length);
         }
       }, 1000); // Update every second
     } else {
@@ -272,32 +252,32 @@ export default function Home() {
                   remarkPlugins={[remarkGfm]} 
                   rehypePlugins={[rehypeRaw, rehypeSanitize]}
                   components={{
-                    h1: ({node, ...props}) => <h1 className="text-2xl font-bold mt-6 mb-4" {...props} />,
-                    h2: ({node, ...props}) => <h2 className="text-xl font-bold mt-5 mb-3" {...props} />,
-                    h3: ({node, ...props}) => <h3 className="text-lg font-bold mt-4 mb-2" {...props} />,
-                    p: ({node, ...props}) => <p className="my-3" {...props} />,
-                    a: ({node, ...props}) => <a className="text-blue-600 dark:text-blue-400 hover:underline" {...props} />,
-                    ul: ({node, ...props}) => <ul className="list-disc pl-6 my-3" {...props} />,
-                    ol: ({node, ...props}) => <ol className="list-decimal pl-6 my-3" {...props} />,
-                    li: ({node, ...props}) => <li className="my-1" {...props} />,
-                    blockquote: ({node, ...props}) => (
+                    h1: ({...props}) => <h1 className="text-2xl font-bold mt-6 mb-4" {...props} />,
+                    h2: ({...props}) => <h2 className="text-xl font-bold mt-5 mb-3" {...props} />,
+                    h3: ({...props}) => <h3 className="text-lg font-bold mt-4 mb-2" {...props} />,
+                    p: ({...props}) => <p className="my-3" {...props} />,
+                    a: ({...props}) => <a className="text-blue-600 dark:text-blue-400 hover:underline" {...props} />,
+                    ul: ({...props}) => <ul className="list-disc pl-6 my-3" {...props} />,
+                    ol: ({...props}) => <ol className="list-decimal pl-6 my-3" {...props} />,
+                    li: ({...props}) => <li className="my-1" {...props} />,
+                    blockquote: ({...props}) => (
                       <blockquote className="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-4" {...props} />
                     ),
-                    code: ({node, inline, ...props}: any) => (
-                      inline 
-                        ? <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm" {...props} />
-                        : <code className="block bg-gray-100 dark:bg-gray-800 p-3 rounded text-sm overflow-x-auto" {...props} />
-                    ),
-                    table: ({node, ...props}) => (
+                    // code: ({inline, ...props}: ) => (
+                    //   inline 
+                    //     ? <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm" {...props} />
+                    //     : <code className="block bg-gray-100 dark:bg-gray-800 p-3 rounded text-sm overflow-x-auto" {...props} />
+                    // ),
+                    table: ({...props}) => (
                       <div className="overflow-x-auto my-6">
                         <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700" {...props} />
                       </div>
                     ),
-                    thead: ({node, ...props}) => <thead className="bg-gray-100 dark:bg-gray-800" {...props} />,
-                    th: ({node, ...props}) => (
+                    thead: ({...props}) => <thead className="bg-gray-100 dark:bg-gray-800" {...props} />,
+                    th: ({...props}) => (
                       <th className="px-4 py-3 text-left text-sm font-medium text-gray-900 dark:text-white" {...props} />
                     ),
-                    td: ({node, ...props}) => (
+                    td: ({...props}) => (
                       <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300 border-t border-gray-200 dark:border-gray-800" {...props} />
                     ),
                   }}
