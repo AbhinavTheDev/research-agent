@@ -88,7 +88,9 @@ export default function Home() {
         }, 5000);
       }
       
-      const response = await fetch('http://localhost:8000/generate-report', {
+      // Get backend URL from environment variables with fallback
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      const response = await fetch(`${backendUrl}/generate-report`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -263,7 +265,7 @@ export default function Home() {
                     blockquote: ({...props}) => (
                       <blockquote className="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-4" {...props} />
                     ),
-                    // code: ({inline, ...props}: ) => (
+                    // code: ({inline, ...props}: any) => (
                     //   inline 
                     //     ? <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm" {...props} />
                     //     : <code className="block bg-gray-100 dark:bg-gray-800 p-3 rounded text-sm overflow-x-auto" {...props} />
