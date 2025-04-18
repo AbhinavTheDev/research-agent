@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable prefer-const */
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
