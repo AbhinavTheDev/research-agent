@@ -175,6 +175,7 @@ export function PlaceholdersAndVanishInput({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     vanishAndSubmit();
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     onSubmit && onSubmit?.(e);
   };
   return (
@@ -196,6 +197,7 @@ export function PlaceholdersAndVanishInput({
         onChange={(e) => {
           if (!animating) {
             setValue(e.target.value);
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             onChange && onChange?.(e);
           }
         }}
