@@ -76,4 +76,4 @@
 
 ### :mailbox: Contact
 Hi, I'm Abhinav! 👋  
-Connect with me on [LinkedIn](https://www.linkedin.com/in/abhinav-mittal-2a1b002a4/), [X](https://x.com/Abhinav11234) and check out my other projects on [GitHub](https://github.com/AbhinavTheDev).
+Connect with me on [LinkedIn](https://www.linkedin.com/in/say-hi-to-abhinav/), [X](https://x.com/Abhinav_twts) and check out my other projects on [GitHub](https://github.com/AbhinavTheDev).

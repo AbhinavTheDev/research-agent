@@ -124,13 +124,12 @@ export default function Home() {
       }
 
       // Get backend URL from environment variables with fallback
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-      const response = await fetch(`${backendUrl}/generate-report`, {
-        method: "POST",
+      const response = await fetch('/api/generate-report', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(request),
+        body: JSON.stringify(request)
       });
 
       if (!response.ok) {
@@ -169,8 +168,8 @@ export default function Home() {
             </div>
 
             {/* Feature boxes */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-              <CardSpotlight className="h-56 w-56">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
+              <CardSpotlight className="h-56 md:w-56 max-md:px-3">
                 <div>
                   <svg
                     width="54px"
@@ -215,7 +214,7 @@ export default function Home() {
                     </g>
                   </svg>
                 </div>
-                <p className="text-neutral-300 relative z-20 text-sm">
+                <p className="text-neutral-300 relative z-20 text-[12px] md:text-sm">
                   <span className="font-bold text-orange-200">
                     Research Agent
                   </span>{" "}
@@ -223,7 +222,7 @@ export default function Home() {
                   searching and reading.
                 </p>
               </CardSpotlight>
-              <CardSpotlight className="h-56 w-56">
+              <CardSpotlight className="h-56 md:w-56 max-md:px-3">
                 <svg
                   width="54px"
                   height="54px"
@@ -320,12 +319,12 @@ export default function Home() {
                     ></path>
                   </g>
                 </svg>
-                <p className="text-neutral-300 relative z-20 text-sm">
+                <p className="text-neutral-300 relative z-20 text-[12px] md:text-sm">
                   Clean, organized reports with proper headings and credible
                   source citations.
                 </p>
               </CardSpotlight>
-              <CardSpotlight className="h-56 w-56">
+              <CardSpotlight className="h-56 md:w-56 max-md:px-3">
                 <svg
                   width="54px"
                   height="54px"
@@ -364,12 +363,12 @@ export default function Home() {
                     ></path>
                   </g>
                 </svg>
-                <p className="text-neutral-300 relative z-20 text-sm">
+                <p className="text-neutral-300 relative z-20 text-[12px] md:text-sm">
                   Watch your research develop in real-time with step-by-step
                   visual progress updates.
                 </p>
               </CardSpotlight>
-              <CardSpotlight className="h-56 w-56">
+              <CardSpotlight className="h-56 md:w-56 max-md:px-3">
                 <div>
                   <svg
                     width="54px"
@@ -406,7 +405,7 @@ export default function Home() {
                     </g>
                   </svg>
                 </div>
-                <p className="text-neutral-300 relative z-20 text-sm">
+                <p className="text-neutral-300 relative z-20 text-[12px] md:text-sm">
                   Transforms raw information from trusted sources into coherent,
                   easy-to-understand content.
                 </p>

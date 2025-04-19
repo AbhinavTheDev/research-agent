@@ -1,11 +1,10 @@
-import asyncio
 import os
 import uuid
 from typing import Dict, Optional, Any
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends, Security, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.security import APIKeyHeader
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
@@ -25,11 +24,23 @@ app = FastAPI(
 # Add CORS middleware to allow frontend requests
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, restrict this to your frontend domain
+    allow_origins=os.getenv("ALLOWED_ORIGINS").split(","),
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=os.getenv("ALLOWED_METHODS").split(","),
+    allow_headers=os.getenv("ALLOWED_HEADERS").split(","),
 )
+
+# API Key security
+API_KEY_NAME = "X-API-Key"
+api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
+
+async def get_api_key(api_key_header: str = Security(api_key_header)):
+    if api_key_header == os.getenv("API_KEY"):
+        return api_key_header
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid or missing API Key",
+    )
 
 # Models for API requests and responses
 class ReportRequest(BaseModel):
@@ -41,7 +52,7 @@ class ReportResponse(BaseModel):
     content: str = Field(..., description="The generated report content")
 
 @app.post("/generate-report", response_model=ReportResponse)
-async def generate_report(request: ReportRequest):
+async def generate_report(request: ReportRequest, api_key: str = Depends(get_api_key)):
     """
     Generate a report on the specified topic.
     This endpoint works synchronously - it will return the report when complete.
@@ -55,14 +66,14 @@ async def generate_report(request: ReportRequest):
         
         # Create base config similar to main.py
         config_base = {
-        "configurable": {
-            "search_api": "duckduckgo",  # or "exa"
-            "planner_provider": "groq",
-            "planner_model": "llama3-70b-8192",
-            "writer_provider": "groq",
-            "writer_model": "llama3-8b-8192",
-            "thread_id": thread_id,
-        }
+            "configurable": {
+                "search_api": os.getenv("SEARCH_API"),
+                "planner_provider": os.getenv("PLANNER_PROVIDER"),
+                "planner_model": os.getenv("PLANNER_MODEL"),
+                "writer_provider": os.getenv("WRITER_PROVIDER"),
+                "writer_model": os.getenv("WRITER_MODEL"),
+                "thread_id": thread_id,
+            }
         }
         
         # Apply any config overrides from the request
