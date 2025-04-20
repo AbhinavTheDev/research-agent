@@ -201,7 +201,7 @@ def human_feedback(state: ReportState, config: RunnableConfig) -> Command[Litera
     # if isinstance(feedback, bool) and feedback is True:
         # Treat this as approve and kick off section writing
         # return Command(goto=[
-    print("Feedback",interrupt_message)
+    # print("Feedback",interrupt_message)
     return Command(goto=[
             Send("build_section_with_web_research", {"topic": topic, "section": s, "search_iterations": 0}) 
             for s in sections 
@@ -252,7 +252,7 @@ def generate_queries(state: SectionState, config: RunnableConfig):
     # Generate queries  
     queries = structured_llm.invoke([SystemMessage(content=system_instructions),
                                      HumanMessage(content="Generate search queries on the provided topic.")])
-    print("\n-------Queries:----------",queries)
+    # print("\n-------Queries:----------",queries)
     return {"search_queries": queries.queries}
 
 async def search_web(state: SectionState, config: RunnableConfig):
@@ -282,7 +282,7 @@ async def search_web(state: SectionState, config: RunnableConfig):
 
     # Web search
     query_list = [query.search_query for query in search_queries]
-    print("\n-------Query List:----------",query_list)
+    # print("\n-------Query List:----------",query_list)
     # Search the web with parameters
     source_str = await select_and_execute_search(search_api, query_list, params_to_pass)
 
