@@ -10,6 +10,16 @@
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
 | [![YouTube](https://i.ytimg.com/vi/-2Rs2kjHpQY/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCmCQ3LlqJLCwl1PiY7EQBWMG8zBQ)](https://youtu.be/-2Rs2kjHpQY) | [![Blog](https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F54fuux8vwzufyrbf0v7i.png)](https://dev.to/abhinav-writes/ai-the-research-companion-mj9) |
 
+## Star History
+
+<a href="https://www.star-history.com/#Abhinavthedev/research-agent&Timeline">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Abhinavthedev/research-agent&type=Timeline&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Abhinavthedev/research-agent&type=Timeline" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Abhinavthedev/research-agent&type=Timeline" />
+ </picture>
+</a>
+
 ### :hammer_and_wrench: Tech Stack
 
 <p align="center">
