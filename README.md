@@ -1,4 +1,6 @@
-# mira
+<img src="./assets/logo/element-wordmark.svg" style="background-color: black;padding: 2rem; border-radius: 2rem;" />
+
+# element ai
 
 To install dependencies:
 
@@ -6,10 +8,15 @@ To install dependencies:
 bun install
 ```
 
+Add Environments (.env)
+
+```bash
+cp .env.example .env
+```
+**Note:** Add the provided API keys to the `.env` file to enable full app functionality.
+
 To run:
 
 ```bash
-bun run index.ts
+bun run dev
 ```
-
-This project was created using `bun init` in bun v1.2.0. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
