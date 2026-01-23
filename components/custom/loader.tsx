@@ -1,4 +1,4 @@
-import { TextLoop } from "../motion-primitives/text-loop";
+import { TextLoop } from "../motion/text-loop";
 
 export function TextLoopLoader() {
   return (

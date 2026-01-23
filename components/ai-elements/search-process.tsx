@@ -111,7 +111,7 @@ export function SearchProcess({ toolPart, onViewSources }: SearchProcessProps) {
 
   if (state === "input-streaming") {
     return (
-      <div className="flex items-center gap-2 mb-2 text-sm text-muted-foreground">
+      <div className="flex items-center gap-2 mb-2 w-fit text-sm text-muted-foreground">
         <Shimmer>Searching the web...</Shimmer>
       </div>
     );
@@ -121,7 +121,7 @@ export function SearchProcess({ toolPart, onViewSources }: SearchProcessProps) {
     return (
       <button
         onClick={() => onViewSources(output.results)}
-        className="flex items-center gap-2 text-sm px-2 py-2 mb-2 rounded-full hover:bg-accent/30"
+        className="flex items-center gap-2 text-sm px-2 py-2 mb-2 rounded-full w-fit hover:bg-accent/30"
       >
         <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
           {output?.results

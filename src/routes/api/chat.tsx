@@ -16,6 +16,7 @@ import { retrieveWebPageTool, webSearchTool } from "@/ai/tools/web-search";
 import { groupInstructions } from "@/ai/prompt";
 import { datetimeTool } from "@/ai/tools/datetime";
 import { tavilySearch } from "@tavily/ai-sdk";
+import { academicSearchTool } from "@/ai/tools/academic-search";
 
 export const Route = createFileRoute("/api/chat")({
   server: {
@@ -26,11 +27,13 @@ export const Route = createFileRoute("/api/chat")({
           model,
           webSearch,
           provider,
+          doAcademicSearch,
         }: {
           messages: UIMessage[];
           model: string;
           webSearch: boolean;
           provider: string;
+          doAcademicSearch: boolean;
         } = await request.json();
 
         // Provider Config
@@ -70,6 +73,11 @@ export const Route = createFileRoute("/api/chat")({
           systemPrompt = groupInstructions.web;
           tools.web_search = webSearchTool;
           tools.retrieve_web_page = retrieveWebPageTool;
+        }
+
+        if (doAcademicSearch) {
+          systemPrompt = groupInstructions.acad;
+          tools.academic_search = academicSearchTool;
         }
 
         // Generate Response

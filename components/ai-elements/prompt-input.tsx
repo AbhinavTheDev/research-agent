@@ -97,7 +97,7 @@ import {
 } from "../ui/hover-card";
 import { nanoid } from "nanoid";
 import type { ChatStatus, FileUIPart } from "ai";
-import { MicrophoneIcon, SquareIcon } from "@phosphor-icons/react";
+import { GraduationCapIcon, MicrophoneIcon, SquareIcon } from "@phosphor-icons/react";
 import { useIsMobile } from "hooks/use-mobile";
 import {
   Drawer,
@@ -134,6 +134,8 @@ export type PromptInputProps = {
   }) => void;
   search: boolean;
   searchHandler: (search: boolean) => void;
+  acadSearch: boolean;
+  acadSearchHandler: (acadSearch: boolean) => void;
   modelProvider: (provider: string) => void;
   status?: ChatStatus;
   stopFn: () => void;
@@ -162,6 +164,8 @@ export function PromptInput({
   modelSelector,
   search,
   searchHandler,
+  acadSearch,
+  acadSearchHandler,
   modelProvider,
   status,
   stopFn,
@@ -343,8 +347,8 @@ export function PromptInput({
     <form
       ref={formRef}
       className={cn(
-        `flex flex-col w-full bg-background  rounded-2xl pb-1 px-1.5`,
-        files.length > 0 ? "border" : "",
+        `flex flex-col bg-background rounded-2xl`,
+        files.length > 0 ? "border pb-1 px-1.5" : "",
         className,
       )}
       onKeyDown={handleKeyDown}
@@ -490,6 +494,15 @@ export function PromptInput({
               onClick={() => searchHandler(!search)}
             >
               <Globe className="size-4" />
+            </Button>
+
+            {/* Acad Search button */}
+            <Button
+              type="button"
+              className={`rounded-lg ${acadSearch ? "bg-foreground text-background hover:bg-foreground/60" : "bg-muted text-foreground hover:bg-muted/60"}`}
+              onClick={() => acadSearchHandler(!acadSearch)}
+            >
+              <GraduationCapIcon className="size-4" />
             </Button>
 
             {/* Model selector */}

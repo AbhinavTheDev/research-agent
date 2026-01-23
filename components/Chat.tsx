@@ -43,21 +43,10 @@ import {
   Shimmer,
   useStickToBottomContext,
   RetrieveProcess,
+  AcademicSearchProcess,
+  AcademicSidebar,
   // PromptInputShell,
 } from "@/components/ai-elements";
-// import {
-//   Drawer,
-//   DrawerContent,
-//   DrawerHeader,
-//   DrawerTitle,
-//   DrawerTrigger,
-// } from "@/components/ui/drawer";
-// import { Command } from "@/components/ui/command";
-// import {
-//   DropdownMenuContent,
-//   DropdownMenuTrigger,
-//   DropdownMenu,
-// } from "@/components/ui/dropdown-menu";
 import { RefreshCcwIcon, CopyIcon } from "lucide-react";
 import { CheckCircleIcon, CheckIcon } from "@phosphor-icons/react";
 import { models } from "ai/models";
@@ -80,25 +69,36 @@ const Chat = memo(function Chat({
   className,
   onMessagesChange,
   onStatusChange,
+  webSearch,
+  setWebSearch,
 }: {
   className?: string;
   onMessagesChange?: (messages: any[]) => void;
   onStatusChange?: (status: string) => void;
+  webSearch: boolean;
+  setWebSearch: (search: boolean) => void;
 }) {
   const [input, setInput] = useState("");
   const [model, setModel] = useState(models[5]);
   const [provider, setProvider] = useState<string>(models[5].providers[0]);
   // const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
-  const [webSearch, setWebSearch] = useState(false);
+  const [doAcademicSearch, setDoAcademicSearch] = useState(false);
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
   const [sidebarSources, setSidebarSources] = useState<any[] | null>(null);
+  const [academicPapers, setAcademicPapers] = useState<any[] | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAcademicSidebarOpen, setIsAcademicSidebarOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const handleViewSources = (sources: any[]) => {
     setSidebarSources(sources);
     setIsSidebarOpen(true);
+  };
+
+  const handleViewPapers = (papers: any[]) => {
+    setAcademicPapers(papers);
+    setIsAcademicSidebarOpen(true);
   };
 
   const handleCopy = (text: string, messageId: string) => {
@@ -153,6 +153,7 @@ const Chat = memo(function Chat({
             model: model.id,
             provider: provider,
             webSearch: webSearch,
+            doAcademicSearch: doAcademicSearch,
           },
         },
       );
@@ -167,22 +168,23 @@ const Chat = memo(function Chat({
             model: model.id,
             provider: provider,
             webSearch: webSearch,
+            doAcademicSearch: doAcademicSearch,
           },
         },
       );
     }
     setInput("");
   };
-
+  // console.log(webSearch);
   return (
     <div
       className={cn(
-        "font-sans mx-auto max-w-4xl px-2 relative h-[92vh] md:h-screen flex flex-col",
+        "font-sans mx-auto max-w-4xl px-2 h-[92vh] md:h-screen flex flex-col z-10",
         className,
       )}
     >
       {messages.length === 0 ? (
-        <div className="flex flex-1 flex-col items-center w-full">
+        <div className="flex flex-1 flex-col items-center w-full z-10">
           <div className="w-full flex-1 flex flex-col items-center justify-center">
             <div className="text-center m-0 mb-2">
               <div className="inline-flex items-center gap-3">
@@ -192,11 +194,14 @@ const Chat = memo(function Chat({
               </div>
             </div>
             <PromptInput
+              className="w-full"
               onSubmit={handleSubmit}
               model={model}
               modelSelector={setModel}
               search={webSearch}
               searchHandler={setWebSearch}
+              acadSearch={doAcademicSearch}
+              acadSearchHandler={setDoAcademicSearch}
               modelProvider={setProvider}
               stopFn={stop}
             />
@@ -209,7 +214,7 @@ const Chat = memo(function Chat({
         </div>
       ) : (
         <div className="flex flex-1 flex-col items-center gap-2 overflow-hidden">
-          <Conversation className="w-full flex-1 max-w-full overflow-y-auto min-h-0 [&::-webkit-scrollbar]:w-0 mb-40">
+          <Conversation className="z-10 w-full flex-1 max-w-full overflow-y-auto min-h-0 [&::-webkit-scrollbar]:w-0 mb-4">
             <ConversationContent>
               {messages.map((message, messageIndex) => (
                 <Fragment key={message.id}>
@@ -276,6 +281,23 @@ const Chat = memo(function Chat({
                                 </MessageResponse>
                               </MessageContent>
                             </Message>
+                            {/* {message.role === "user" && (
+                              <MessageActions className="justify-end m-0">
+                                <MessageAction
+                                  onClick={() => {
+                                    handleCopy(part.text, message.id); // Copy only the cleaned text
+                                  }}
+                                  label="Copy"
+                                  tooltip="Copy"
+                                >
+                                  {copiedMessageId === message.id ? (
+                                    <CheckIcon className="size-3" />
+                                  ) : (
+                                    <CopyIcon className="size-3" />
+                                  )}
+                                </MessageAction>
+                              </MessageActions>
+                            )} */}
                             {message.role === "assistant" &&
                               part.state === "done" && (
                                 <MessageActions>
@@ -287,6 +309,7 @@ const Chat = memo(function Chat({
                                           model: model.id,
                                           provider: provider,
                                           webSearch: webSearch,
+                                          doAcademicSearch: doAcademicSearch,
                                         },
                                       })
                                     }
@@ -327,6 +350,14 @@ const Chat = memo(function Chat({
                             toolPart={part}
                           />
                         );
+                      case "tool-academic_search":
+                        return (
+                          <AcademicSearchProcess
+                            key={`${message.id}-${i}`}
+                            toolPart={part}
+                            onViewPapers={handleViewPapers}
+                          />
+                        );
                       default:
                         return null;
                     }
@@ -353,6 +384,7 @@ const Chat = memo(function Chat({
                             model: model.id,
                             provider: provider,
                             webSearch: webSearch,
+                            doAcademicSearch: doAcademicSearch,
                           },
                         })
                       }
@@ -367,12 +399,14 @@ const Chat = memo(function Chat({
             <ConversationScrollButton />
           </Conversation>
           <PromptInput
-            className="absolute bottom-6"
+            className="relative bottom-6 w-full z-10"
             onSubmit={handleSubmit}
             model={model}
             modelSelector={setModel}
             search={webSearch}
             searchHandler={setWebSearch}
+            acadSearch={doAcademicSearch}
+            acadSearchHandler={setDoAcademicSearch}
             modelProvider={setProvider}
             status={status}
             stopFn={stop}
@@ -383,6 +417,11 @@ const Chat = memo(function Chat({
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
         sources={sidebarSources || []}
+      />
+      <AcademicSidebar
+        isOpen={isAcademicSidebarOpen}
+        onClose={() => setIsAcademicSidebarOpen(false)}
+        papers={academicPapers || []}
       />
     </div>
   );
