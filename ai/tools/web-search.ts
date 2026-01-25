@@ -1,4 +1,4 @@
-import { createServerFn, createServerOnlyFn } from "@tanstack/react-start";
+import { createServerOnlyFn } from "@tanstack/react-start";
 import { tavily, type TavilyExtractResponse } from "@tavily/core";
 import { tool } from "ai";
 import { z } from "zod/v4";

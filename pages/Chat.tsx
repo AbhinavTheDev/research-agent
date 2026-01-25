@@ -1,95 +1,74 @@
-import { useRef, useState, useEffect, Fragment, memo } from "react";
+import { /*useRef,*/ useState, useEffect, Fragment, memo, lazy } from "react";
+import {
+  type PromptInputMessage,
+  PromptInput,
+} from "@/components/elements/prompt-input.tsx";
 import {
   Conversation,
   ConversationContent,
   ConversationScrollButton,
-  PromptInput,
-  // PromptInputActionAddAttachments,
-  // PromptInputActionMenu,
-  // PromptInputActionMenuContent,
-  // PromptInputActionMenuTrigger,
-  // PromptInputAttachment,
-  // PromptInputAttachments,
-  // PromptInputBody,
-  // PromptInputButton,
-  // PromptInputFooter,
-  // PromptInputSpeechButton,
-  // PromptInputSubmit,
-  // PromptInputTextarea,
-  // PromptInputTools,
-  type PromptInputMessage,
-  // ModelSelectorEmpty,
-  // ModelSelectorGroup,
-  // ModelSelectorInput,
-  // ModelSelectorItem,
-  // ModelSelectorList,
-  // ModelSelectorLogo,
-  // ModelSelectorLogoGroup,
-  // ModelSelectorName,
+} from "@/components/elements/conversation.tsx";
+import {
   Message,
+  MessageContent,
   MessageAction,
   MessageActions,
-  MessageAttachment,
   MessageAttachments,
-  MessageContent,
+  MessageAttachment,
   MessageResponse,
-  Tool,
-  ToolContent,
-  ToolHeader,
-  ToolInput,
-  ToolOutput,
+} from "@/components/elements/message.tsx";
+import {
   SearchProcess,
-  SourcesSidebar,
-  Shimmer,
-  useStickToBottomContext,
   RetrieveProcess,
-  AcademicSearchProcess,
-  AcademicSidebar,
-  // PromptInputShell,
-} from "@/components/ai-elements";
+} from "@/components/elements/search-process.tsx";
+import { AcademicSearchProcess } from "@/components/elements/AcademicSearch.tsx";
 import { RefreshCcwIcon, CopyIcon } from "lucide-react";
-import { CheckCircleIcon, CheckIcon } from "@phosphor-icons/react";
-import { models } from "ai/models";
-import { useMediaQuery } from "hooks/use-media-query";
+import { CheckIcon } from "@phosphor-icons/react";
 import { DefaultChatTransport } from "ai";
 import { useChat } from "@ai-sdk/react";
-import { useMockChat } from "@/test/use-mock-chat";
-import { cn } from "@/lib/utils";
+import { useMockChat } from "@/test/use-mock-chat.ts";
+import { cn } from "@/lib/utils.ts";
 import {
   Reasoning,
   ReasoningContent,
   ReasoningTrigger,
-} from "./ai-elements/reasoning";
-import { TextLoopLoader } from "./custom/loader";
-import { Link } from "@tanstack/react-router";
+} from "@/components/elements/reasoning.tsx";
+import { TextLoopLoader } from "@/components/elements/loader.tsx";
+import { chatStore } from "@/utils/store.ts";
+import { useStore } from "@tanstack/react-store";
+
+const SourcesSidebar = lazy(() =>
+  import("@/components/elements/search-process.tsx").then((module) => ({
+    default: module.SourcesSidebar,
+  })),
+);
+const AcademicSidebar = lazy(() =>
+  import("@/components/elements/AcademicSearch.tsx").then((module) => ({
+    default: module.AcademicSidebar,
+  })),
+);
 
 const USE_MOCK_DATA = false;
 
-const Chat = memo(function Chat({
+const ChatPage = memo(function Chat({
   className,
   onMessagesChange,
   onStatusChange,
-  webSearch,
-  setWebSearch,
 }: {
   className?: string;
   onMessagesChange?: (messages: any[]) => void;
   onStatusChange?: (status: string) => void;
-  webSearch: boolean;
-  setWebSearch: (search: boolean) => void;
 }) {
   const [input, setInput] = useState("");
-  const [model, setModel] = useState(models[5]);
-  const [provider, setProvider] = useState<string>(models[5].providers[0]);
-  // const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
-  const [doAcademicSearch, setDoAcademicSearch] = useState(false);
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
   const [sidebarSources, setSidebarSources] = useState<any[] | null>(null);
   const [academicPapers, setAcademicPapers] = useState<any[] | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAcademicSidebarOpen, setIsAcademicSidebarOpen] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const model = useStore(chatStore, (state) => state.model);
+  const webSearch = useStore(chatStore, (state) => state.webSearch);
+  const doAcademicSearch = useStore(chatStore, (state) => state.academicSearch);
+  const provider = useStore(chatStore, (state) => state.provider);
 
   const handleViewSources = (sources: any[]) => {
     setSidebarSources(sources);
@@ -128,6 +107,7 @@ const Chat = memo(function Chat({
   //     ),
   //   [messages]
   // );
+
   // Notify parent of changes
   useEffect(() => {
     onMessagesChange?.(messages);
@@ -196,13 +176,6 @@ const Chat = memo(function Chat({
             <PromptInput
               className="w-full"
               onSubmit={handleSubmit}
-              model={model}
-              modelSelector={setModel}
-              search={webSearch}
-              searchHandler={setWebSearch}
-              acadSearch={doAcademicSearch}
-              acadSearchHandler={setDoAcademicSearch}
-              modelProvider={setProvider}
               stopFn={stop}
             />
           </div>
@@ -216,7 +189,7 @@ const Chat = memo(function Chat({
         <div className="flex flex-1 flex-col items-center gap-2 overflow-hidden">
           <Conversation className="z-10 w-full flex-1 max-w-full overflow-y-auto min-h-0 [&::-webkit-scrollbar]:w-0 mb-4">
             <ConversationContent>
-              {messages.map((message, messageIndex) => (
+              {messages.map((message) => (
                 <Fragment key={message.id}>
                   <MessageAttachments className="mb-2">
                     {message.parts.map((part: any) =>
@@ -364,6 +337,7 @@ const Chat = memo(function Chat({
                   })}
                 </Fragment>
               ))}
+
               {/* Display Error Message in Messages UI */}
               {error && (
                 <Fragment>
@@ -401,13 +375,6 @@ const Chat = memo(function Chat({
           <PromptInput
             className="relative bottom-6 w-full z-10"
             onSubmit={handleSubmit}
-            model={model}
-            modelSelector={setModel}
-            search={webSearch}
-            searchHandler={setWebSearch}
-            acadSearch={doAcademicSearch}
-            acadSearchHandler={setDoAcademicSearch}
-            modelProvider={setProvider}
             status={status}
             stopFn={stop}
           />
@@ -427,4 +394,4 @@ const Chat = memo(function Chat({
   );
 });
 
-export { Chat };
+export { ChatPage };

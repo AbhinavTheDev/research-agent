@@ -1,4 +1,4 @@
-import { TextLoop } from "../motion/text-loop";
+import { TextLoop } from "../motion/text-loop.tsx";
 
 export function TextLoopLoader() {
   return (

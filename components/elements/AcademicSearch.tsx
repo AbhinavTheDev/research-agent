@@ -5,12 +5,11 @@ import {
   BookOpenIcon,
 } from "lucide-react";
 import type { ToolUIPart } from "ai";
-import { Shimmer } from "./shimmer";
-import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
-import { Alert } from "../ui/alert";
-import { useIsMobile } from "hooks/use-mobile";
-import { CheckCircleIcon } from "@phosphor-icons/react";
-import { Badge } from "../ui/badge";
+import { Shimmer } from "./shimmer.tsx";
+import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar.tsx";
+import { Alert } from "../ui/alert.tsx";
+import { useIsMobile } from "hooks/use-mobile.ts";
+import { Badge } from "../ui/badge.tsx";
 
 export type AcademicPaper = {
   id: string;

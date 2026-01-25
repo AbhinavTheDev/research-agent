@@ -5,7 +5,6 @@ interface GridMotionProps {
   gradientColor?: string;
   rows?: number;
   cols?: number;
-  webSearch?: boolean; // Added for consistency with usage in index.tsx
 }
 
 const GridMotion: React.FC<GridMotionProps> = ({
@@ -13,7 +12,6 @@ const GridMotion: React.FC<GridMotionProps> = ({
   gradientColor = "black",
   rows = 4,
   cols = 7,
-  webSearch = false, // Default to false
 }) => {
   const totalItems = rows * cols;
   const defaultItems = Array.from(

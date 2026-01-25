@@ -24,13 +24,12 @@ interface OpenAlexWork {
   abstract_inverted_index?: Record<string, number[]>;
   publication_year?: number;
   publication_date?: Date;
-  authorships?: any[]; // Add more specific typing if needed
+  authorships?: any[]; 
   cited_by_count?: number;
   open_access?: { is_oa: boolean };
   primary_location?: any;
   keywords?: string[];
   primary_topic?: any;
-  // Add other properties as needed based on OpenAlex API response
 }
 
 interface EnrichedWork extends OpenAlexWork {

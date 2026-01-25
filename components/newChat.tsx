@@ -1,12 +1,11 @@
-import { cn } from "lib/utils";
-import { Button } from "./ui/button";
+import { Button } from "./ui/button.tsx";
 import { PenBoxIcon } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/components/ui/tooltip.tsx";
 import {
   Dialog,
   DialogContent,
@@ -15,8 +14,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { useEffect, useState } from "react";
+} from "@/components/ui/dialog.tsx";
+import { useState } from "react";
+import { cn } from "@/lib/utils.ts";
 
 export function NewChat({
   className,
@@ -45,7 +45,7 @@ export function NewChat({
               <DialogTrigger asChild>
                 <Button
                   className={cn(
-                    "group bg-background text-foreground rounded-xl border justify-center items-center gap-2 hover:bg-muted/50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    "group bg-background text-foreground rounded-xl border justify-center items-center gap-2 hover:bg-muted/50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed",
                   )}
                   onClick={() => {
                     if (hasMessages) {

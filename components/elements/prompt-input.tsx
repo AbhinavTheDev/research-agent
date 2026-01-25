@@ -61,11 +61,9 @@ import React, {
   type ChangeEventHandler,
   useCallback,
 } from "react";
-import { cn } from "lib/utils";
 import {
   ChevronDown,
   Paperclip,
-  Mic,
   SendIcon,
   Globe,
   ImagePlusIcon,
@@ -81,31 +79,41 @@ import {
   CommandList,
   CommandItem,
   Command,
-} from "../ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+} from "../ui/command.tsx";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { Textarea } from "@/components/ui/textarea.tsx";
 import { Image } from "@unpic/react";
-import { models } from "ai/models";
-import { Input } from "../ui/input";
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
-import { DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { models, type ModelProps } from "ai/models";
+import { Input } from "../ui/input.tsx";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu.tsx";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "../ui/hover-card";
+} from "../ui/hover-card.tsx";
 import { nanoid } from "nanoid";
 import type { ChatStatus, FileUIPart } from "ai";
-import { GraduationCapIcon, MicrophoneIcon, SquareIcon } from "@phosphor-icons/react";
-import { useIsMobile } from "hooks/use-mobile";
+import {
+  GraduationCapIcon,
+  MicrophoneIcon,
+  SquareIcon,
+} from "@phosphor-icons/react";
+import { useIsMobile } from "hooks/use-mobile.ts";
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer";
+} from "../ui/drawer.tsx";
+import { useStore } from "@tanstack/react-store";
+import { chatStore } from "@/utils/store.ts";
+import { cn } from "@/lib/utils.ts";
 
 // Minimal PromptInput component
 export type PromptInputMessage = {
@@ -118,25 +126,6 @@ export type PromptInputProps = {
     message: PromptInputMessage,
     event: FormEvent<HTMLFormElement>,
   ) => void | Promise<void>;
-  model: {
-    id: string;
-    name: string;
-    chef: string;
-    chefSlug: string;
-    providers: string[];
-  };
-  modelSelector: (model: {
-    id: string;
-    name: string;
-    chef: string;
-    chefSlug: string;
-    providers: string[];
-  }) => void;
-  search: boolean;
-  searchHandler: (search: boolean) => void;
-  acadSearch: boolean;
-  acadSearchHandler: (acadSearch: boolean) => void;
-  modelProvider: (provider: string) => void;
   status?: ChatStatus;
   stopFn: () => void;
   className?: string;
@@ -160,13 +149,6 @@ const convertBlobUrlToDataUrl = async (url: string): Promise<string | null> => {
 
 export function PromptInput({
   onSubmit,
-  model,
-  modelSelector,
-  search,
-  searchHandler,
-  acadSearch,
-  acadSearchHandler,
-  modelProvider,
   status,
   stopFn,
   className,
@@ -177,6 +159,9 @@ export function PromptInput({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const search = useStore(chatStore, (state) => state.webSearch);
+  const acadSearch = useStore(chatStore, (state) => state.academicSearch);
+  const model = useStore(chatStore, (state) => state.model);
   const isMobile = useIsMobile();
 
   // State for managing attached files with blob URLs and IDs
@@ -325,7 +310,41 @@ export function PromptInput({
       formRef.current?.requestSubmit();
     }
   };
+  const acadSearchHandler = (key: boolean) => {
+    chatStore.setState((state) => {
+      return {
+        ...state,
+        academicSearch: key,
+      };
+    });
+  };
 
+  const searchHandler = (key: boolean) => {
+    chatStore.setState((state) => {
+      return {
+        ...state,
+        webSearch: key,
+      };
+    });
+  };
+
+  const modelSelector = (key: ModelProps) => {
+    chatStore.setState((state) => {
+      return {
+        ...state,
+        model: key,
+      };
+    });
+  };
+
+  const setProvider = (key: string) => {
+    chatStore.setState((state) => {
+      return {
+        ...state,
+        provider: key,
+      };
+    });
+  };
   useEffect(() => {
     if (typeof window !== "undefined") {
       const handleGlobalKeyDown = (event: KeyboardEvent) => {
@@ -401,7 +420,7 @@ export function PromptInput({
                   <div className="w-auto space-y-3">
                     {isImage && (
                       <div className="flex max-h-96 w-96 items-center justify-center overflow-hidden rounded-md border">
-                        <img
+                        <Image
                           alt={filename || "attachment preview"}
                           className="max-h-full max-w-full object-contain"
                           height={284}
@@ -563,7 +582,7 @@ export function PromptInput({
                                   className="rounded-full p-2"
                                   onSelect={() => {
                                     modelSelector(item);
-                                    modelProvider(item.providers[0]);
+                                    setProvider(item.providers[0]);
                                     setModelSelectorOpen(false);
                                   }}
                                 >
@@ -654,7 +673,7 @@ export function PromptInput({
                                   className="rounded-full p-2"
                                   onSelect={() => {
                                     modelSelector(item);
-                                    modelProvider(item.providers[0]);
+                                    setProvider(item.providers[0]);
                                     setModelSelectorOpen(false);
                                   }}
                                 >

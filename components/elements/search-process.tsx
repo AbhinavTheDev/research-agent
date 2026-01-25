@@ -1,16 +1,16 @@
 import {
   ArrowUpRightFromSquareIcon,
   ChevronRight,
-  InfoIcon,
   XIcon,
 } from "lucide-react";
 import type { ToolUIPart } from "ai";
-import { Shimmer } from "./shimmer";
-import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
-import { Alert } from "../ui/alert";
-import { useIsMobile } from "hooks/use-mobile";
+import { Shimmer } from "./shimmer.tsx";
+import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar.tsx";
+import { Alert } from "../ui/alert.tsx";
+import { useIsMobile } from "hooks/use-mobile.ts";
 import { CheckCircleIcon } from "@phosphor-icons/react";
-import { Link, Navigate, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
+import { Image } from "@unpic/react";
 
 type SearchResult = {
   title: string;
@@ -51,7 +51,7 @@ const SourceCard = ({
         <ArrowUpRightFromSquareIcon className="opacity-0 group-hover:opacity-100 transition-opacity" />
       </div>
       <div className="text-xs text-muted-foreground flex items-center gap-1 mb-1">
-        <img
+        <Image
           src={`https://www.google.com/s2/favicons?sz=64&domain_url=${encodeURIComponent(
             domain,
           )}`}
@@ -174,7 +174,6 @@ type RetrieveProcessProps = {
 
 export function RetrieveProcess({ toolPart }: RetrieveProcessProps) {
   const { state, output } = toolPart;
-  const nav = useNavigate();
 
   if (state === "input-streaming") {
     return (

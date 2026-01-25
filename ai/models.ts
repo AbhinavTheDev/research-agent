@@ -1,3 +1,12 @@
+export type ModelProps = {
+  id: string;
+  name: string;
+  chef: string;
+  chefSlug: string;
+  providers: string[];
+  toolSupport?: boolean;
+};
+
 export const models = [
   {
     id: "gemini-2.5-flash",
@@ -86,4 +95,4 @@ export const models = [
     providers: ["ollama"],
     toolSupport: false,
   },
-];
+]

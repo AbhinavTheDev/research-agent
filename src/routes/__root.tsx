@@ -10,7 +10,9 @@ import {
 } from "@tanstack/react-router";
 import appCss from "@/styles/globals.css?url";
 import { ThemeProvider } from "@/utils/theme-provider";
-import favicon from "@/src/favicon.ico";
+import {seo} from "@/utils/seo.ts"
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import favicon from "/favicon.ico";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -22,9 +24,9 @@ export const Route = createRootRoute({
         name: "viewport",
         content: "width=device-width, initial-scale=1",
       },
-      {
+      ...seo({
         title: "Element AI",
-      },
+      }),
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -58,6 +60,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       <body>
         {children}
         <Scripts />
+        <TanStackRouterDevtools />
       </body>
     </html>
   );

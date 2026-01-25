@@ -1,15 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { ButtonGroup, ButtonGroupText } from "@/components/ui/button-group";
+import { Button } from "@/components/ui/button.tsx";
+import { ButtonGroup, ButtonGroupText } from "@/components/ui/button-group.tsx";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { cn } from "lib/utils";
-import { useTheme } from "@/utils/theme-provider";
+} from "@/components/ui/tooltip.tsx";
+import { cn } from "lib/utils.ts";
+import { useTheme } from "@/utils/theme-provider.tsx";
 import type { FileUIPart, UIMessage } from "ai";
 import {
   ChevronLeftIcon,
@@ -21,6 +21,7 @@ import type { ComponentProps, HTMLAttributes, ReactElement } from "react";
 import { createContext, memo, useContext, useEffect, useState } from "react";
 import type { BundledTheme } from "shiki";
 import { Streamdown } from "streamdown";
+import { Image } from "@unpic/react";
 
 export type MessageProps = HTMLAttributes<HTMLDivElement> & {
   from: UIMessage["role"];
@@ -369,7 +370,7 @@ export function MessageAttachment({
     >
       {isImage ? (
         <>
-          <img
+          <Image
             alt={filename || "attachment"}
             className="size-full object-cover"
             height={100}

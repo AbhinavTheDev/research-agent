@@ -1,12 +1,12 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge.tsx";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { cn } from "lib/utils";
+} from "@/components/ui/collapsible.tsx";
+import { cn } from "lib/utils.ts";
 import type { ToolUIPart } from "ai";
 import {
   CheckCircleIcon,
@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { isValidElement } from "react";
-import { CodeBlock } from "./code-block";
+import { CodeBlock } from "./code-block.tsx";
 
 export type ToolProps = ComponentProps<typeof Collapsible>;
 
