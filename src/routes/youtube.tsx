@@ -105,15 +105,15 @@ function YouTubePage() {
   const hasAnalysis = Boolean(messages || isLoading);
 
   return (
-    <div className="flex flex-col min-h-[93vh] md:h-screen max-w-4xl mx-auto font-sans bg-background selection:bg-primary/20 relative">
+    <div className="flex flex-col min-h-[93vh] md:h-screen max-w-4xl mx-auto font-sans selection:bg-primary/20 relative">
       {/* Scrollable Content Area */}
-      <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-0 px-4 w-full scrollbar-none ">
+      <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-0 px-4 w-full scrollbar-none">
         <div className="flex flex-col justify-end min-h-full py-6 space-y-8">
           {/* Empty State / Hero */}
           {!hasAnalysis && (
             <div className="flex-1 flex flex-col items-center justify-center space-y-6 text-center animate-in fade-in duration-500 relative">
-              {/* Enhancement: Subtle Gradient Background */}
-              <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-transparent to-transparent opacity-20 blur-3xl pointer-events-none rounded-full" />
+              {/* Removed the old static simple gradient, relying on the new global grid/orb above */}
+
               <div className="relative group mb-8">
                 <div className="absolute -inset-8 bg-gradient-to-tr from-red-600/10 via-primary/10 to-red-600/10 rounded-full blur-3xl opacity-40 group-hover:opacity-70 transition duration-1000" />
                 <div className="relative flex items-center -space-x-5">
@@ -139,7 +139,8 @@ function YouTubePage() {
                   youtube <em>element</em>
                 </h1>
                 <p className="text-muted-foreground/70 text-lg max-w-md mx-auto leading-relaxed">
-                  Turn hours of video into seconds of clarity. <br className="hidden sm:block" />
+                  Turn hours of video into seconds of clarity.{" "}
+                  <br className="hidden sm:block" />
                   Paste a link to chat with any YouTube content.
                 </p>
               </div>
@@ -237,8 +238,19 @@ function YouTubePage() {
       </div>
 
       {/* Interactive Input Area at Bottom */}
-      <div className="w-full px-4 pb-6 pt-2 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="relative flex flex-col gap-2 rounded-2xl bg-muted/30 border border-border/50 p-2 ring-offset-background focus-within:ring-2 focus-within:ring-ring/20 transition-all hover:bg-muted/40">
+      <div className="w-full px-4 pb-6 pt-2 z-10">
+        {/* --- MODIFIED: Reactive Input "Core" --- */}
+        {/* The container now reacts to the `isLoading` state with a subtle shadow pulse */}
+        <div
+          className={cn(
+            "relative flex flex-col gap-2 rounded-2xl p-2 ring-offset-background transition-all duration-500 ease-in-out",
+            // Default State:
+            "bg-muted/30 border border-border/50 hover:bg-muted/40 focus-within:ring-2 focus-within:ring-ring/20",
+            // Loading State: Adds a subtle 'thinking' aura
+            isLoading &&
+              "bg-background/80 shadow-[0_0_30px_-10px_rgba(239,68,68,0.2)] border-red-500/20",
+          )}
+        >
           {/* Top Row: Thumbnail Pill OR URL Input */}
           <div className="flex items-center gap-2 px-2 pt-1">
             {thumbnailUrl ? (
@@ -319,7 +331,7 @@ function YouTubePage() {
                 thumbnailUrl ? "Ask about this video..." : "Enter URL first..."
               }
               disabled={!thumbnailUrl && !url} // Encourages URL entry, but allows typing if URL exists
-              className="min-h-[44px] w-full resize-none border-0 bg-transparent p-2 text-sm shadow-none focus-visible:ring-0 disabled:opacity-50 placeholder:text-muted-foreground/50"
+              className="min-h-[44px] w-full resize-none border-0 p-2 text-sm shadow-none focus-visible:ring-0 disabled:opacity-50 placeholder:text-muted-foreground/50"
               rows={1}
             />
             <Button
@@ -332,7 +344,7 @@ function YouTubePage() {
               onClick={handleSubmit}
             >
               {isLoading ? (
-                <Loader className="w-4 h-4 animate-spin" />
+                <Loader />
               ) : (
                 <ArrowUp className="w-4 h-4" />
               )}

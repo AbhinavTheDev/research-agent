@@ -332,7 +332,11 @@ export function PromptInput({
     chatStore.setState((state) => {
       return {
         ...state,
-        model: key,
+        model: {
+          ...key,
+          imageSupport: !!key.imageSupport,
+          toolSupport: !!key.toolSupport,
+        },
       };
     });
   };
@@ -455,6 +459,7 @@ export function PromptInput({
           onChange={(e) => setInput(e.target.value)}
           placeholder={placeholder}
           className="text-sm resize-none outline-none border-none shadow-none pl-2 max-h-32 overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-accent [&::-webkit-scrollbar-thumb]:rounded-full"
+          autoFocus
           rows={3}
         />
 
