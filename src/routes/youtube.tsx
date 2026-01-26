@@ -23,6 +23,16 @@ function YouTubePage() {
   const [prompt, setPrompt] = useState("");
   const [url, setUrl] = useState("");
   const [messages, setMessages] = useState("");
+
+  // Uncomment for testing UI
+//   useEffect(() => {
+//     setUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+//     setLastPrompt("Summarize this video.");
+//     setMessages(
+//       "This is a sample response for testing purposes:\n\n1. Introduction to the topic.\n2. Detailed analysis of the key points.\n3. Conclusion and takeaways.This is a sample response for testing purposes:",
+//     );
+//   }, []);
+
   const [isLoading, setIsLoading] = useState(false);
   const [lastPrompt, setLastPrompt] = useState("");
   const [copied, setCopied] = useState(false); // New state for copy feedback
@@ -51,8 +61,13 @@ function YouTubePage() {
     const match = url.match(regExp);
     return match && match[2].length === 11 ? match[2] : null;
   };
+  const getYoutubeShortId = (url: string): string | null => {
+    const regExp = /youtube\.com\/shorts\/([^#&?]*)/;
+    const match = url.match(regExp);
+    return match && match[1].length === 11 ? match[1] : null;
+  };
 
-  const videoId = getYouTubeId(url);
+  const videoId = getYouTubeId(url) || getYoutubeShortId(url);
   const thumbnailUrl = videoId
     ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`
     : null;
@@ -107,8 +122,8 @@ function YouTubePage() {
   return (
     <div className="flex flex-col min-h-[93vh] md:h-screen max-w-4xl mx-auto font-sans selection:bg-primary/20 relative">
       {/* Scrollable Content Area */}
-      <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-0 px-4 w-full scrollbar-none">
-        <div className="flex flex-col justify-end min-h-full py-6 space-y-8">
+      <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-0 px-4 w-full">
+        <div className="flex flex-col justify-end min-h-full pt-6 md:pt-4">
           {/* Empty State / Hero */}
           {!hasAnalysis && (
             <div className="flex-1 flex flex-col items-center justify-center space-y-6 text-center animate-in fade-in duration-500 relative">
@@ -169,7 +184,7 @@ function YouTubePage() {
 
           {/* Analysis Content */}
           {hasAnalysis && (
-            <div className="w-full space-y-8 pb-4">
+            <div className="w-full flex flex-col gap-2 overflow-y-auto h-[70vh] overflow-x-hidden [&::-webkit-scrollbar]:w-0">
               {/* User Question Bubble */}
               <div className="flex justify-end animate-in slide-in-from-bottom-2 fade-in duration-300">
                 <div className="bg-muted/50 text-foreground px-5 py-3.5 rounded-3xl rounded-br-sm max-w-[85%] sm:max-w-[75%] border border-border/50">
@@ -181,9 +196,6 @@ function YouTubePage() {
 
               {/* AI Response */}
               <div className="flex gap-4 items-start animate-in slide-in-from-bottom-2 fade-in duration-500 delay-100 group/response">
-                <div className="shrink-0 rounded-full p-2 bg-primary/10 mt-1">
-                  <Sparkles className="size-5 text-primary" />
-                </div>
                 <div className="flex-1 space-y-4 min-w-0 relative">
                   <div
                     className="prose prose-slate dark:prose-invert max-w-none 
@@ -210,13 +222,19 @@ function YouTubePage() {
                   {!isLoading && messages && (
                     <button
                       onClick={handleCopy}
-                      className="absolute -top-1 -right-1 p-2 rounded-lg bg-background/80 backdrop-blur border border-border/50 text-muted-foreground opacity-0 group-hover/response:opacity-100 transition-all duration-200 hover:text-foreground hover:bg-muted shadow-sm"
+                      className="p-2 rounded-lg bg-background/80 backdrop-blur border border-border/50 text-muted-foreground group-hover/response:opacity-100 transition-all duration-200 hover:text-foreground hover:bg-muted shadow-sm"
                       title="Copy to clipboard"
                     >
                       {copied ? (
-                        <Check className="w-3.5 h-3.5 text-green-500" />
+                        <div className="flex gap-2 items-center">
+                          <Check className="w-3.5 h-3.5 text-green-500" />
+                          <span className="text-xs hidden md:block">Copied</span>
+                        </div>
                       ) : (
-                        <Copy className="w-3.5 h-3.5" />
+                        <div className="flex gap-2 items-center">
+                          <Copy className="w-3.5 h-3.5" />
+                          <span className="text-xs hidden md:block">Copy</span>
+                        </div>
                       )}
                     </button>
                   )}
@@ -343,11 +361,7 @@ function YouTubePage() {
               disabled={!prompt || !videoId || isLoading}
               onClick={handleSubmit}
             >
-              {isLoading ? (
-                <Loader />
-              ) : (
-                <ArrowUp className="w-4 h-4" />
-              )}
+              {isLoading ? <Loader /> : <ArrowUp className="w-4 h-4" />}
             </Button>
           </div>
         </div>
