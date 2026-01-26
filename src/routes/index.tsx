@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ChatPage } from "@/pages/Chat";
 // import { ModeToggle } from "@/components/mode-toggle";
 import { NewChat } from "@/components/newChat";
@@ -6,7 +6,6 @@ import { useState } from "react";
 // import GridMotion from "@/components/elements/grid-pattern.tsx";
 import { Globe, MessageCircle } from "lucide-react";
 import { useMediaQuery } from "hooks/use-media-query";
-import { useNavigate } from "@tanstack/react-router";
 import { useStore } from "@tanstack/react-store";
 import { chatStore } from "@/utils/store.ts";
 
@@ -19,7 +18,6 @@ function Home() {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<any[]>([]);
   const [status, setStatus] = useState<"idle" | "streaming">("idle");
-  // const [webSearch, setWebSearch] = useState(false); // Lifted webSearch state
   const webSearch = useStore(chatStore, (state) => state.webSearch);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const rows = isDesktop ? 5 : 7;

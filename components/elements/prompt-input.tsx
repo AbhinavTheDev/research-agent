@@ -462,35 +462,39 @@ export function PromptInput({
         <div className="flex items-center justify-between mt-2 border p-1 rounded-xl">
           <div className="flex items-center gap-1">
             {/* Attachment button */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  type="button"
-                  className="bg-muted text-foreground hover:bg-muted/60 rounded-lg"
-                >
-                  <Paperclip className="size-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="ml-8 md:ml-24">
-                <div className="flex flex-col gap-2 size-fit">
+            {model.imageSupport === true ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
                   <Button
-                    className="flex gap-2 size-fit bg-transparent text-foreground hover:bg-muted/40"
-                    onClick={() => fileInputRef.current?.click()}
+                    type="button"
+                    className="bg-muted text-foreground hover:bg-muted/60 rounded-lg"
                   >
-                    <ImagePlusIcon className="size-4" />
-                    <p className="text-xs">Attach Files</p>
+                    <Paperclip className="size-4" />
                   </Button>
-                  <Input
-                    ref={fileInputRef}
-                    type="file"
-                    multiple
-                    title="Upload files"
-                    className="hidden"
-                    onChange={handleFileChange}
-                  />
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="ml-8 md:ml-24">
+                  <div className="flex flex-col gap-2 size-fit">
+                    <Button
+                      className="flex gap-2 size-fit bg-transparent text-foreground hover:bg-muted/40"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <ImagePlusIcon className="size-4" />
+                      <p className="text-xs">Attach Files</p>
+                    </Button>
+                    <Input
+                      ref={fileInputRef}
+                      type="file"
+                      multiple
+                      title="Upload files"
+                      className="hidden"
+                      onChange={handleFileChange}
+                    />
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              ``
+            )}
 
             {/* Voice button */}
             <Button
@@ -506,23 +510,31 @@ export function PromptInput({
               <MicrophoneIcon className="size-4" />
             </Button>
 
-            {/* Search button */}
-            <Button
-              type="button"
-              className={`rounded-lg ${search ? "bg-foreground text-background hover:bg-foreground/60" : "bg-muted text-foreground hover:bg-muted/60"}`}
-              onClick={() => searchHandler(!search)}
-            >
-              <Globe className="size-4" />
-            </Button>
+            {model.toolSupport === true ? (
+              <div className="flex items-center gap-1">
+                {/* Search button */}
+                <Button
+                  type="button"
+                  className={`rounded-lg ${search ? "bg-foreground text-background hover:bg-foreground/60" : "bg-muted text-foreground hover:bg-muted/60"}`}
+                  onClick={() => searchHandler(!search)}
+                >
+                  <Globe className="size-4" />
+                  <span className="hidden md:block">Web</span>
+                </Button>
 
-            {/* Acad Search button */}
-            <Button
-              type="button"
-              className={`rounded-lg ${acadSearch ? "bg-foreground text-background hover:bg-foreground/60" : "bg-muted text-foreground hover:bg-muted/60"}`}
-              onClick={() => acadSearchHandler(!acadSearch)}
-            >
-              <GraduationCapIcon className="size-4" />
-            </Button>
+                {/* Acad Search button */}
+                <Button
+                  type="button"
+                  className={`rounded-lg ${acadSearch ? "bg-foreground text-background hover:bg-foreground/60" : "bg-muted text-foreground hover:bg-muted/60"}`}
+                  onClick={() => acadSearchHandler(!acadSearch)}
+                >
+                  <GraduationCapIcon className="size-4" />
+                  <span className="hidden md:block">Academic</span>
+                </Button>
+              </div>
+            ) : (
+              ``
+            )}
 
             {/* Model selector */}
             {isMobile ? (

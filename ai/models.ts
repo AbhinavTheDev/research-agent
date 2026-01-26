@@ -5,6 +5,7 @@ export type ModelProps = {
   chefSlug: string;
   providers: string[];
   toolSupport?: boolean;
+  imageSupport?: boolean;
 };
 
 export const models = [
@@ -15,14 +16,17 @@ export const models = [
     chefSlug: "google",
     providers: ["google"],
     toolSupport: true,
+    imageSupport: true,
   },
   {
     id: "gemini-2.5-flash-lite",
     name: "Gemini 2.5 Flash Lite",
     chef: "Google",
     chefSlug: "google",
-    toolSupport: true,
     providers: ["google"],
+    toolSupport: true,
+    imageSupport: true,
+
   },
   {
     id: "gemini-2.5-pro",
@@ -31,6 +35,7 @@ export const models = [
     chefSlug: "google",
     providers: ["google"],
     toolSupport: true,
+    imageSupport: true,
   },
   {
     id: "qwen/qwen3-32b",
@@ -39,6 +44,7 @@ export const models = [
     chefSlug: "qwen",
     providers: ["groq"],
     toolSupport: true,
+    imageSupport: false,
   },
   {
     id: "moonshotai/kimi-k2-instruct-0905",
@@ -47,6 +53,7 @@ export const models = [
     chefSlug: "moonshotai",
     providers: ["groq"],
     toolSupport: true,
+    imageSupport: false,
   },
   {
     id: "openai/gpt-oss-20b",
@@ -55,6 +62,7 @@ export const models = [
     chefSlug: "openai",
     providers: ["groq"],
     toolSupport: true,
+    imageSupport: false,
   },
   {
     id: "openai/gpt-oss-120b",
@@ -63,6 +71,7 @@ export const models = [
     chefSlug: "openai",
     providers: ["groq"],
     toolSupport: true,
+    imageSupport: false,
   },
   {
     id: "openai/gpt-oss-safeguard-20b",
@@ -70,6 +79,7 @@ export const models = [
     chef: "OpenAI",
     chefSlug: "openai",
     providers: ["groq"],
+    imageSupport: false,
   },
   {
     id: "meta-llama/llama-4-maverick-17b-128e-instruct",
@@ -78,6 +88,7 @@ export const models = [
     chefSlug: "meta",
     providers: ["groq"],
     toolSupport: true,
+    imageSupport: true,
   },
   {
     id: "meta-llama/llama-4-scout-17b-16e-instruct",
@@ -86,6 +97,7 @@ export const models = [
     chefSlug: "meta",
     providers: ["groq"],
     toolSupport: true,
+    imageSupport: true,
   },
   {
     id: "deepseek-r1:1.5b",
@@ -94,5 +106,6 @@ export const models = [
     chefSlug: "deepseek",
     providers: ["ollama"],
     toolSupport: false,
+    imageSupport: false,
   },
 ]

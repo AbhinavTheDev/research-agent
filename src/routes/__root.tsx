@@ -9,9 +9,11 @@ import {
   ClientOnly,
 } from "@tanstack/react-router";
 import appCss from "@/styles/globals.css?url";
-import { ThemeProvider } from "@/utils/theme-provider";
-import {seo} from "@/utils/seo.ts"
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import { ThemeProvider } from "@/utils/theme-provider.tsx";
+import { seo } from "@/utils/seo.ts";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import {DefaultCatchBoundary} from "@/components/DefaultCatchBoundary.tsx"
+import { NotFound } from "@/pages/NotFound.tsx";
 import favicon from "/favicon.ico";
 
 export const Route = createRootRoute({
@@ -36,6 +38,14 @@ export const Route = createRootRoute({
       },
     ],
   }),
+  errorComponent: (props) => {
+    return (
+      <RootDocument>
+        <DefaultCatchBoundary {...props} />
+      </RootDocument>
+    );
+  },
+  notFoundComponent: () => <NotFound />,
   component: RootComponent,
 });
 
