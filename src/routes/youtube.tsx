@@ -6,13 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader } from "@/components/elements/loader";
 import { cn } from "@/lib/utils";
-import { Sparkles, Youtube, ArrowUp, X, Link } from "lucide-react";
+import { Sparkles, Youtube, ArrowUp, X, Link, Copy, Check } from "lucide-react";
 import { YoutubeLogoIcon } from "@phosphor-icons/react";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { Image } from "@unpic/react";
 
 export const Route = createFileRoute("/youtube")({
   component: YouTubePage,
@@ -24,6 +25,7 @@ function YouTubePage() {
   const [messages, setMessages] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [lastPrompt, setLastPrompt] = useState("");
+  const [copied, setCopied] = useState(false); // New state for copy feedback
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -86,28 +88,81 @@ function YouTubePage() {
     setLastPrompt("");
   };
 
+  const handleSuggestion = (text: string) => {
+    setPrompt(text);
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  };
+
+  const handleCopy = () => {
+    if (!messages) return;
+    navigator.clipboard.writeText(messages);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const hasAnalysis = Boolean(messages || isLoading);
 
   return (
-    <div className="flex flex-col h-screen max-w-4xl mx-auto font-sans bg-background selection:bg-primary/20">
+    <div className="flex flex-col min-h-[93vh] md:h-screen max-w-4xl mx-auto font-sans bg-background selection:bg-primary/20 relative">
       {/* Scrollable Content Area */}
-      <div className="flex-1 overflow-y-auto px-4 w-full scrollbar-none">
+      <div className="flex-1 overflow-y-auto [&::-webkit-scrollbar]:w-0 px-4 w-full scrollbar-none ">
         <div className="flex flex-col justify-end min-h-full py-6 space-y-8">
           {/* Empty State / Hero */}
           {!hasAnalysis && (
-            <div className="flex-1 flex flex-col items-center justify-center space-y-6 text-center animate-in fade-in duration-500">
-              <div className="p-4 rounded-full bg-accent/20 ring-1 ring-accent/40 mb-2">
-                <YoutubeLogoIcon className="w-10 h-10 text-red-600" />
+            <div className="flex-1 flex flex-col items-center justify-center space-y-6 text-center animate-in fade-in duration-500 relative">
+              {/* Enhancement: Subtle Gradient Background */}
+              <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-transparent to-transparent opacity-20 blur-3xl pointer-events-none rounded-full" />
+              <div className="relative group mb-8">
+                <div className="absolute -inset-8 bg-gradient-to-tr from-red-600/10 via-primary/10 to-red-600/10 rounded-full blur-3xl opacity-40 group-hover:opacity-70 transition duration-1000" />
+                <div className="relative flex items-center -space-x-5">
+                  <div className="z-20 p-4 rounded-[2rem] bg-background border border-border/40 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 group-hover:-translate-y-1 group-hover:-rotate-3">
+                    <Image
+                      src="./assets/logo/element-logo.svg"
+                      alt="Element"
+                      width={44}
+                      height={44}
+                      className="w-11 h-11"
+                    />
+                  </div>
+                  <div className="z-10 p-4 rounded-[2rem] bg-background/60 backdrop-blur-md border border-border/40 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] translate-y-6 transition-all duration-500 group-hover:translate-y-5 group-hover:rotate-3">
+                    <YoutubeLogoIcon
+                      weight="fill"
+                      className="w-11 h-11 text-[#FF0000] drop-shadow-sm"
+                    />
+                  </div>
+                </div>
               </div>
               <div className="space-y-2 max-w-lg">
-                <h1 className="text-3xl sm:text-4xl font-light tracking-tight text-foreground">
-                  Video Insights
+                <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground">
+                  youtube <em>element</em>
                 </h1>
-                <p className="text-muted-foreground text-lg">
-                  Enter a YouTube URL and ask questions to get instant
-                  AI-powered summaries and answers.
+                <p className="text-muted-foreground/70 text-lg max-w-md mx-auto leading-relaxed">
+                  Turn hours of video into seconds of clarity. <br className="hidden sm:block" />
+                  Paste a link to chat with any YouTube content.
                 </p>
               </div>
+
+              {/* Enhancement: Quick Suggestion Chips */}
+              {videoId && (
+                <div className="grid grid-cols-2 gap-2 w-full max-w-md mt-4 sm:mt-6 animate-in slide-in-from-bottom-4 fade-in duration-700">
+                  {[
+                    "Summarize this video",
+                    "What are the key takeaways?",
+                    "Explain the main technical concepts",
+                    "Analyze the speaker's arguments",
+                  ].map((suggestion) => (
+                    <button
+                      key={suggestion}
+                      onClick={() => handleSuggestion(suggestion)}
+                      className="text-xs sm:text-sm px-4 py-2.5 rounded-xl bg-muted/40 hover:bg-muted/80 border border-border/40 hover:border-primary/20 text-muted-foreground hover:text-foreground transition-all text-left truncate"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
@@ -124,11 +179,11 @@ function YouTubePage() {
               </div>
 
               {/* AI Response */}
-              <div className="flex gap-4 items-start animate-in slide-in-from-bottom-2 fade-in duration-500 delay-100">
+              <div className="flex gap-4 items-start animate-in slide-in-from-bottom-2 fade-in duration-500 delay-100 group/response">
                 <div className="shrink-0 rounded-full p-2 bg-primary/10 mt-1">
                   <Sparkles className="size-5 text-primary" />
                 </div>
-                <div className="flex-1 space-y-4 min-w-0">
+                <div className="flex-1 space-y-4 min-w-0 relative">
                   <div
                     className="prose prose-slate dark:prose-invert max-w-none 
                     prose-headings:font-medium prose-headings:text-foreground
@@ -149,6 +204,21 @@ function YouTubePage() {
                       </div>
                     )}
                   </div>
+
+                  {/* Enhancement: Copy Button */}
+                  {!isLoading && messages && (
+                    <button
+                      onClick={handleCopy}
+                      className="absolute -top-1 -right-1 p-2 rounded-lg bg-background/80 backdrop-blur border border-border/50 text-muted-foreground opacity-0 group-hover/response:opacity-100 transition-all duration-200 hover:text-foreground hover:bg-muted shadow-sm"
+                      title="Copy to clipboard"
+                    >
+                      {copied ? (
+                        <Check className="w-3.5 h-3.5 text-green-500" />
+                      ) : (
+                        <Copy className="w-3.5 h-3.5" />
+                      )}
+                    </button>
+                  )}
 
                   {/* Streaming indicator */}
                   {isLoading && (
@@ -219,7 +289,10 @@ function YouTubePage() {
               </HoverCard>
             ) : (
               <div className="flex-1 flex items-center gap-2 text-muted-foreground px-1">
-                <YoutubeLogoIcon className="w-4 h-4 shrink-0 transition-colors" />
+                <YoutubeLogoIcon
+                  weight="fill"
+                  className="w-4 h-4 shrink-0 transition-colors"
+                />
                 <Input
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
