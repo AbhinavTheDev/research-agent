@@ -15,7 +15,6 @@ import { createOllama } from "ai-sdk-ollama";
 import { retrieveWebPageTool, webSearchTool } from "@/ai/tools/web-search";
 import { groupInstructions } from "@/ai/prompt";
 import { datetimeTool } from "@/ai/tools/datetime";
-import { tavilySearch } from "@tavily/ai-sdk";
 import { academicSearchTool } from "@/ai/tools/academic-search";
 
 export const Route = createFileRoute("/api/chat")({

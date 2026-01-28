@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader } from "@/components/elements/loader";
 import { cn } from "@/lib/utils";
-import { Sparkles, Youtube, ArrowUp, X, Link, Copy, Check } from "lucide-react";
+import { ArrowUp, X, Copy, Check } from "lucide-react";
 import { YoutubeLogoIcon } from "@phosphor-icons/react";
 import {
   HoverCard,

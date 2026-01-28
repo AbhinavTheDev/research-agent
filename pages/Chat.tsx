@@ -17,11 +17,21 @@ import {
   MessageAttachment,
   MessageResponse,
 } from "@/components/elements/message.tsx";
-import {
-  SearchProcess,
-  RetrieveProcess,
-} from "@/components/elements/search-process.tsx";
-import { AcademicSearchProcess } from "@/components/elements/AcademicSearch.tsx";
+const SearchProcess =lazy(() =>
+  import("@/components/elements/search-process.tsx").then((module) => ({
+    default: module.SearchProcess,
+  })),
+);
+const RetrieveProcess =lazy(() =>
+  import("@/components/elements/search-process.tsx").then((module) => ({
+    default: module.RetrieveProcess,
+  })),
+);
+const AcademicSearchProcess = lazy(() =>
+  import("@/components/elements/AcademicSearch.tsx").then((module) => ({
+    default: module.AcademicSearchProcess,
+  })),
+);
 import { RefreshCcwIcon, CopyIcon } from "lucide-react";
 import { CheckIcon } from "@phosphor-icons/react";
 import { DefaultChatTransport } from "ai";

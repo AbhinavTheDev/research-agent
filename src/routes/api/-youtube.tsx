@@ -1,8 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { googleAI } from "@genkit-ai/google-genai";
 import { z } from "@genkit-ai/core";
 import { genkit } from "genkit";
-import { logger } from "genkit/logging";
 import { createServerFn } from "@tanstack/react-start";
 
 // logger.setLogLevel("debug");
