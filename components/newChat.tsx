@@ -45,7 +45,7 @@ export function NewChat({
               <DialogTrigger asChild>
                 <Button
                   className={cn(
-                    "group bg-background text-foreground rounded-xl border justify-center items-center gap-2 hover:bg-muted/50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed",
+                    "group bg-background text-foreground rounded-lg border justify-center items-center gap-2 hover:bg-muted/70 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed",
                   )}
                   onClick={() => {
                     if (hasMessages) {

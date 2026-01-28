@@ -33,3 +33,7 @@ pnpm-debug.log*
 src/routeTree.gen.ts
 
 test/
+
+.github/
+.tanstack/
+.wrangler/

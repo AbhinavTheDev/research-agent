@@ -26,7 +26,6 @@ import { RefreshCcwIcon, CopyIcon } from "lucide-react";
 import { CheckIcon } from "@phosphor-icons/react";
 import { DefaultChatTransport } from "ai";
 import { useChat } from "@ai-sdk/react";
-import { useMockChat } from "@/test/use-mock-chat.ts";
 import { cn } from "@/lib/utils.ts";
 import {
   Reasoning,
@@ -47,8 +46,6 @@ const AcademicSidebar = lazy(() =>
     default: module.AcademicSidebar,
   })),
 );
-
-const USE_MOCK_DATA = false;
 
 const ChatPage = memo(function Chat({
   className,
@@ -91,10 +88,8 @@ const ChatPage = memo(function Chat({
       api: "/api/chat",
     }),
   });
-  const mockChat = useMockChat();
 
-  const { messages, sendMessage, status, regenerate, stop, error } =
-    USE_MOCK_DATA ? mockChat : realChat;
+  const { messages, sendMessage, status, regenerate, stop, error } = realChat;
 
   // useEffect(() => console.log("Status:", status), [status]);
   // useEffect(

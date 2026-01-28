@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "preview": "bun run build && vite preview",
+    "deploy": "bun run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -31,6 +34,7 @@
     "@ai-sdk/google": "^3.0.6",
     "@ai-sdk/groq": "^3.0.4",
     "@ai-sdk/react": "^3.0.25",
+    "@cloudflare/vite-plugin": "^1.22.0",
     "@genkit-ai/google-genai": "^1.28.0",
     "@genkit-ai/googleai": "^1.28.0",
     "@heroui/alert": "^2.2.29",
@@ -49,10 +53,12 @@
     "@radix-ui/react-tabs": "^1.1.13",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@radix-ui/react-use-controllable-state": "^1.2.2",
+    "@react-three/fiber": "^9.5.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-router": "^1.145.7",
     "@tanstack/react-start": "^1.145.10",
     "@tavily/ai-sdk": "^0.4.0",
+    "@types/three": "^0.182.0",
     "@unpic/react": "^1.0.2",
     "ai": "^6.0.27",
     "ai-sdk-ollama": "^3.1.1",
@@ -65,12 +71,14 @@
     "lucide-react": "^0.562.0",
     "motion": "^12.27.0",
     "nanoid": "^5.1.6",
+    "ogl": "^1.0.11",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "shiki": "^3.21.0",
     "streamdown": "^1.6.11",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
+    "three": "^0.182.0",
     "use-stick-to-bottom": "^1.1.1",
     "vaul": "^1.1.2",
     "zod": "^4.3.5"
