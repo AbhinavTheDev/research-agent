@@ -1,0 +1,177 @@
+/**
+ * LiteDown Prism Theme
+ * Optimized for both light and dark modes
+ */
+
+/* Base code styling */
+.litedown code,
+.litedown pre {
+  font-family: 'SF Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* ==========================================
+   DARK THEME (Default)
+   ========================================== */
+
+/* Token colors - Dark theme */
+.prose-invert .token.comment,
+.prose-invert .token.prolog,
+.prose-invert .token.doctype,
+.prose-invert .token.cdata {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.prose-invert .token.punctuation {
+  color: #9ca3af;
+}
+
+.prose-invert .token.namespace {
+  opacity: 0.8;
+}
+
+.prose-invert .token.property,
+.prose-invert .token.tag,
+.prose-invert .token.boolean,
+.prose-invert .token.number,
+.prose-invert .token.constant,
+.prose-invert .token.symbol,
+.prose-invert .token.deleted {
+  color: #7dd3fc;
+}
+
+.prose-invert .token.selector,
+.prose-invert .token.attr-name,
+.prose-invert .token.string,
+.prose-invert .token.char,
+.prose-invert .token.builtin,
+.prose-invert .token.inserted {
+  color: #86efac;
+}
+
+.prose-invert .token.operator,
+.prose-invert .token.entity,
+.prose-invert .token.url,
+.prose-invert .language-css .token.string,
+.prose-invert .style .token.string {
+  color: #fca5a5;
+}
+
+.prose-invert .token.atrule,
+.prose-invert .token.attr-value,
+.prose-invert .token.keyword {
+  color: #c4b5fd;
+}
+
+.prose-invert .token.function,
+.prose-invert .token.class-name {
+  color: #fcd34d;
+}
+
+.prose-invert .token.regex,
+.prose-invert .token.important,
+.prose-invert .token.variable {
+  color: #fdba74;
+}
+
+.prose-invert .token.parameter {
+  color: #fdba74;
+}
+
+.prose-invert .token.decorator,
+.prose-invert .token.annotation {
+  color: #c4b5fd;
+}
+
+/* ==========================================
+   LIGHT THEME
+   ========================================== */
+
+/* Token colors - Light theme */
+.prose-slate .token.comment,
+.prose-slate .token.prolog,
+.prose-slate .token.doctype,
+.prose-slate .token.cdata {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.prose-slate .token.punctuation {
+  color: #374151;
+}
+
+.prose-slate .token.namespace {
+  opacity: 0.8;
+}
+
+.prose-slate .token.property,
+.prose-slate .token.tag,
+.prose-slate .token.boolean,
+.prose-slate .token.number,
+.prose-slate .token.constant,
+.prose-slate .token.symbol,
+.prose-slate .token.deleted {
+  color: #0369a1;
+}
+
+.prose-slate .token.selector,
+.prose-slate .token.attr-name,
+.prose-slate .token.string,
+.prose-slate .token.char,
+.prose-slate .token.builtin,
+.prose-slate .token.inserted {
+  color: #15803d;
+}
+
+.prose-slate .token.operator,
+.prose-slate .token.entity,
+.prose-slate .token.url,
+.prose-slate .language-css .token.string,
+.prose-slate .style .token.string {
+  color: #dc2626;
+}
+
+.prose-slate .token.atrule,
+.prose-slate .token.attr-value,
+.prose-slate .token.keyword {
+  color: #7c3aed;
+}
+
+.prose-slate .token.function,
+.prose-slate .token.class-name {
+  color: #b45309;
+}
+
+.prose-slate .token.regex,
+.prose-slate .token.important,
+.prose-slate .token.variable {
+  color: #c2410c;
+}
+
+.prose-slate .token.parameter {
+  color: #c2410c;
+}
+
+.prose-slate .token.decorator,
+.prose-slate .token.annotation {
+  color: #7c3aed;
+}
+
+/* ==========================================
+   SHARED STYLES
+   ========================================== */
+
+.token.important,
+.token.bold {
+  font-weight: 600;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}

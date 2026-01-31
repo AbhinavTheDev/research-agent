@@ -4,15 +4,13 @@ import {
   convertToModelMessages,
   stepCountIs,
   type ToolSet,
-  wrapLanguageModel,
-  extractReasoningMiddleware,
 } from "ai";
 import { createFileRoute } from "@tanstack/react-router";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createGroq } from "@ai-sdk/groq";
 import { models } from "ai/models";
-import { createOllama } from "ai-sdk-ollama";
-import { retrieveWebPageTool, webSearchTool } from "@/ai/tools/web-search";
+// import { createOllama } from "ai-sdk-ollama";
+import { retrieveWebPageTool, webSearchTool } from "@/ai/tools/web-search.functions";
 import { groupInstructions } from "@/ai/prompt";
 import { datetimeTool } from "@/ai/tools/datetime";
 import { academicSearchTool } from "@/ai/tools/academic-search";
@@ -37,16 +35,16 @@ export const Route = createFileRoute("/api/chat")({
 
         // Provider Config
         const google = createGoogleGenerativeAI({
-          apiKey: process.env.SOME_API_KEY,
+          apiKey: process.env.GOOGLE_API_KEY,
         });
 
         const groq = createGroq({
           apiKey: process.env.GROQ_API_KEY,
         });
 
-        const ollama = createOllama({
-          baseURL: "http://localhost:11434/",
-        });
+        // const ollama = createOllama({
+        //   baseURL: "http://localhost:11434/",
+        // });
 
         const selectedModelInfo = models.find((item) => item.id === model);
 
@@ -55,11 +53,11 @@ export const Route = createFileRoute("/api/chat")({
           llmModel = google(model);
         } else if (provider === "groq") {
           llmModel = groq(model);
-        } else if (provider === "ollama") {
-          llmModel = wrapLanguageModel({
-            model: ollama(model),
-            middleware: extractReasoningMiddleware({ tagName: "think" }),
-          });
+        // } else if (provider === "ollama") {
+        //   llmModel = wrapLanguageModel({
+        //     model: ollama(model),
+        //     middleware: extractReasoningMiddleware({ tagName: "think" }),
+        //   });
         } else {
           return new Response("Unsupported provider", { status: 400 });
         }

@@ -111,8 +111,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../ui/drawer.tsx";
-import { useStore } from "@tanstack/react-store";
-import { chatStore } from "@/utils/store.ts";
+import { chatStore, useChatStore } from "@/utils/store.ts";
 import { cn } from "@/lib/utils.ts";
 
 // Minimal PromptInput component
@@ -159,9 +158,9 @@ export function PromptInput({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const search = useStore(chatStore, (state) => state.webSearch);
-  const acadSearch = useStore(chatStore, (state) => state.academicSearch);
-  const model = useStore(chatStore, (state) => state.model);
+  const search = useChatStore((state) => state.webSearch);
+  const acadSearch = useChatStore((state) => state.academicSearch);
+  const model = useChatStore((state) => state.model);
   const isMobile = useIsMobile();
 
   // State for managing attached files with blob URLs and IDs
@@ -555,7 +554,7 @@ export function PromptInput({
                   >
                     <div className="p-1 bg-white rounded-full">
                       <Image
-                        src={`./assets/icons/${model.chefSlug}.svg`}
+                        src={`/assets/icons/${model.chefSlug}.svg`}
                         alt=""
                         width={10}
                         height={10}
@@ -607,7 +606,7 @@ export function PromptInput({
                                     <div className="flex gap-2 items-center">
                                       <div className="p-0.5 bg-white rounded-full">
                                         <Image
-                                          src={`./assets/icons/${item.chefSlug}.svg`}
+                                          src={`/assets/icons/${item.chefSlug}.svg`}
                                           alt={`${item.chefSlug}`}
                                           width={10}
                                           height={10}
@@ -619,7 +618,7 @@ export function PromptInput({
                                     </div>
                                     <div className="flex gap-2">
                                       <Image
-                                        src={`./assets/icons/${item.providers[0]}.svg`}
+                                        src={`/assets/icons/${item.providers[0]}.svg`}
                                         alt={`${item.providers[0]}`}
                                         width={15}
                                         height={15}
@@ -655,7 +654,7 @@ export function PromptInput({
                   >
                     <div className="p-1 bg-white rounded-full">
                       <Image
-                        src={`./assets/icons/${model.chefSlug}.svg`}
+                        src={`/assets/icons/${model.chefSlug}.svg`}
                         alt=""
                         width={10}
                         height={10}
@@ -698,7 +697,7 @@ export function PromptInput({
                                     <div className="flex gap-2 items-center">
                                       <div className="p-0.5 bg-white rounded-full">
                                         <Image
-                                          src={`./assets/icons/${item.chefSlug}.svg`}
+                                          src={`/assets/icons/${item.chefSlug}.svg`}
                                           alt={`${item.chefSlug}`}
                                           width={10}
                                           height={10}
@@ -708,7 +707,7 @@ export function PromptInput({
                                     </div>
                                     <div className="flex gap-2">
                                       <Image
-                                        src={`./assets/icons/${item.providers[0]}.svg`}
+                                        src={`/assets/icons/${item.providers[0]}.svg`}
                                         alt={`${item.providers[0]}`}
                                         width={15}
                                         height={15}

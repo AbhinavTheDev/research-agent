@@ -17,12 +17,12 @@ import {
   MessageAttachment,
   MessageResponse,
 } from "@/components/elements/message.tsx";
-const SearchProcess =lazy(() =>
+const SearchProcess = lazy(() =>
   import("@/components/elements/search-process.tsx").then((module) => ({
     default: module.SearchProcess,
   })),
 );
-const RetrieveProcess =lazy(() =>
+const RetrieveProcess = lazy(() =>
   import("@/components/elements/search-process.tsx").then((module) => ({
     default: module.RetrieveProcess,
   })),
@@ -43,8 +43,7 @@ import {
   ReasoningTrigger,
 } from "@/components/elements/reasoning.tsx";
 import { TextLoopLoader } from "@/components/elements/loader.tsx";
-import { chatStore } from "@/utils/store.ts";
-import { useStore } from "@tanstack/react-store";
+import { useChatStore } from "@/utils/store.ts";
 
 const SourcesSidebar = lazy(() =>
   import("@/components/elements/search-process.tsx").then((module) => ({
@@ -72,10 +71,10 @@ const ChatPage = memo(function Chat({
   const [academicPapers, setAcademicPapers] = useState<any[] | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAcademicSidebarOpen, setIsAcademicSidebarOpen] = useState(false);
-  const model = useStore(chatStore, (state) => state.model);
-  const webSearch = useStore(chatStore, (state) => state.webSearch);
-  const doAcademicSearch = useStore(chatStore, (state) => state.academicSearch);
-  const provider = useStore(chatStore, (state) => state.provider);
+  const model = useChatStore((state) => state.model);
+  const webSearch = useChatStore((state) => state.webSearch);
+  const doAcademicSearch = useChatStore((state) => state.academicSearch);
+  const provider = useChatStore((state) => state.provider);
 
   const handleViewSources = (sources: any[]) => {
     setSidebarSources(sources);
@@ -90,7 +89,7 @@ const ChatPage = memo(function Chat({
   const handleCopy = (text: string, messageId: string) => {
     navigator.clipboard.writeText(text);
     setCopiedMessageId(messageId);
-    setTimeout(() => setCopiedMessageId(null), 2000); // Reset after 2 seconds
+    setTimeout(() => setCopiedMessageId(null), 2000); 
   };
 
   const realChat = useChat({
@@ -241,7 +240,7 @@ const ChatPage = memo(function Chat({
                             }
                           >
                             <ReasoningTrigger />
-                            <ReasoningContent>{part.text}</ReasoningContent>
+                            <ReasoningContent status={status}>{part.text}</ReasoningContent>
                           </Reasoning>
                         );
                       case "text":
@@ -251,6 +250,7 @@ const ChatPage = memo(function Chat({
                               <MessageContent key={`${message.id}-${i}`}>
                                 <MessageResponse
                                   key={`${message.id}-${i}`}
+                                  status={status}
                                   className={cn(
                                     "whitespace-pre-wrap wrap-break-word",
                                   )}
@@ -298,7 +298,7 @@ const ChatPage = memo(function Chat({
                                   </MessageAction>
                                   <MessageAction
                                     onClick={() => {
-                                      handleCopy(part.text, message.id); // Copy only the cleaned text
+                                      handleCopy(part.text, message.id); 
                                     }}
                                     label="Copy"
                                     tooltip="Copy"

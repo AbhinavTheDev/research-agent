@@ -6,9 +6,8 @@ import { useState } from "react";
 // import GridMotion from "@/components/elements/grid-pattern.tsx";
 import { Globe, MessageCircle } from "lucide-react";
 import { useMediaQuery } from "hooks/use-media-query";
-import { useStore } from "@tanstack/react-store";
-import { chatStore } from "@/utils/store.ts";
-import { DottedGlowBackground } from "@/components/motion/dotted-glow-background";
+import { chatStore, useChatStore } from "@/utils/store.ts";
+// import { DottedGlowBackground } from "@/components/motion/dotted-glow-background";
 import { cn } from "@/lib/utils";
 import { FadeIn } from "@/pages/Landing";
 
@@ -21,7 +20,7 @@ function Chat() {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<any[]>([]);
   const [status, setStatus] = useState<"idle" | "streaming">("idle");
-  const webSearch = useStore(chatStore, (state) => state.webSearch);
+  const webSearch = useChatStore((state) => state.webSearch);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const rows = isDesktop ? 5 : 7;
   const cols = isDesktop ? 7 : 4;
@@ -62,7 +61,7 @@ function Chat() {
           </div> */}
           <header className="absolute top-2 left-2 z-50">
             <NewChat
-              className="md:w-auto w-12 h-12 z-50"
+              className="md:w-auto w-12 h-12 z-80"
               onClick={handleNewChat}
               disabled={status === "streaming"}
               hasMessages={messages.length > 0}

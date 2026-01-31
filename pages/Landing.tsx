@@ -471,7 +471,7 @@ const Footer = () => (
       <div className="flex flex-col gap-4 max-w-sm">
         <div className="flex items-center gap-2">
           <Image
-            src="./assets/logo/element-logo.svg"
+            src="/assets/logo/element-logo.svg"
             alt="element"
             width={30}
             height={30}
@@ -523,7 +523,7 @@ export const LandingPage = () => {
         <div className="container flex h-14 items-center justify-between px-6 mx-auto">
           <div className="flex items-center gap-2">
             <Image
-              src="./assets/logo/element-logo.svg"
+              src="/assets/logo/element-logo.svg"
               alt="element"
               width={30}
               height={30}

@@ -1,85 +1,7 @@
+import { TavilyProvider, type SearchProvider } from "@/server/tavily.server";
 import { createServerOnlyFn } from "@tanstack/react-start";
-import { tavily, type TavilyExtractResponse } from "@tavily/core";
 import { tool } from "ai";
 import { z } from "zod/v4";
-
-/**
- * Common interface for web search providers.
- * Defines the contract for searching the web and returning results.
- */
-interface SearchProvider {
-  /**
-   * Performs a web search with the given query and optional parameters.
-   * @param query - The search query string.
-   * @param options - Optional search configuration.
-   * @returns A promise that resolves to the search results.
-   */
-  search(query: string, options?: SearchOptions): Promise<SearchResult>;
-  extract(urls: string[]): Promise<TavilyExtractResponse>;
-}
-
-/**
- * Options for configuring a web search.
- */
-interface SearchOptions {
-  /**
-   * The maximum number of results to return. Defaults to 5 if not specified.
-   */
-  maxResults?: number;
-  /**
-   * The depth of the search: "basic" for quick results or "advanced" for deeper analysis.
-   */
-  searchDepth?: "basic" | "advanced";
-  /**
-   * The topic category for the search: "general", "news", or "finance".
-   */
-  topic?: "general" | "news" | "finance";
-}
-
-/**
- * The result of a web search operation.
- */
-interface SearchResult {
-  /**
-   * An array of search result items, each containing title, URL, and content.
-   */
-  results: { title: string; url: string; content: string }[];
-  /**
-   * An optional direct answer or summary from the search provider.
-   */
-  answer?: string;
-}
-
-/**
- * Implementation of the SearchProvider interface using the Tavily API.
- * Handles web searches via the Tavily client.
- */
-class TavilyProvider implements SearchProvider {
-  /**
-   * The Tavily API client instance.
-   */
-  private client;
-
-  /**
-   * Creates a new TavilyProvider instance.
-   * @param apiKey - The API key for authenticating with Tavily.
-   */
-  constructor(apiKey: string) {
-    this.client = tavily({ apiKey });
-  }
-
-  async search(query: string, options?: SearchOptions): Promise<SearchResult> {
-    return await this.client.search(query, {
-      maxResults: options?.maxResults ?? 5,
-      searchDepth: options?.searchDepth ?? "basic",
-      topic: options?.topic ?? "general",
-    });
-  }
-
-  async extract(urls: string[]): Promise<TavilyExtractResponse> {
-    return await this.client.extract(urls);
-  }
-}
 
 /**
  * Creates and returns a SearchProvider instance based on the specified provider.
@@ -89,14 +11,23 @@ class TavilyProvider implements SearchProvider {
  * @returns An instance of the SearchProvider.
  * @throws Error if an unknown provider is specified.
  */
-function createSearchTool(provider: "tavily", apiKey: string): SearchProvider {
+// function createSearchTool(provider: "tavily", apiKey: string): SearchProvider {
+//   switch (provider) {
+//     case "tavily":
+//       return new TavilyProvider(apiKey);
+//     default:
+//       throw new Error(`Unknown provider: ${provider}`);
+//   }
+// }
+
+const createSearchTool = createServerOnlyFn((provider: "tavily", apiKey: string): SearchProvider => {
   switch (provider) {
     case "tavily":
       return new TavilyProvider(apiKey);
     default:
       throw new Error(`Unknown provider: ${provider}`);
   }
-}
+});
 
 /**
  * Tavily API Key Getter - Server Only Function
