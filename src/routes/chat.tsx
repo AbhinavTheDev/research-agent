@@ -49,7 +49,7 @@ function Chat() {
   return (
     <div className="relative h-[93vh] md:h-screen bg-background text-foreground overflow-hidden">
       <div className="relative flex h-full max-w-full flex-col px-2 py-2">
-        <main className="relative backdrop-panel flex-1 w-full overflow-hidden rounded-2xl border border-white/15">
+        <main className="relative backdrop-panel flex-1 w-full overflow-hidden rounded-2xl border border-border">
           {/* <div className="absolute w-full h-lg">
             <GridMotion
               items={customIcons}
@@ -77,7 +77,7 @@ function Chat() {
           </FadeIn>
           <div
             className={cn(
-              "absolute inset-0 opacity-30",
+              "absolute inset-0",
               "[background-size:20px_20px]",
               "[background-image:radial-gradient(#d4d4d4_1px,transparent_1px)]",
               "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",

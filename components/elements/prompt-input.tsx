@@ -348,28 +348,28 @@ export function PromptInput({
       };
     });
   };
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const handleGlobalKeyDown = (event: KeyboardEvent) => {
-        const textarea = document.querySelector(
-          "#textarea",
-        ) as HTMLTextAreaElement | null;
-        if (textarea) {
-          textarea.focus();
-        }
-      };
-      window.addEventListener("keydown", handleGlobalKeyDown);
-      return () => {
-        window.removeEventListener("keydown", handleGlobalKeyDown);
-      };
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const handleGlobalKeyDown = (event: KeyboardEvent) => {
+  //       const textarea = document.querySelector(
+  //         "#textarea",
+  //       ) as HTMLTextAreaElement | null;
+  //       if (textarea) {
+  //         textarea.focus();
+  //       }
+  //     };
+  //     window.addEventListener("keydown", handleGlobalKeyDown);
+  //     return () => {
+  //       window.removeEventListener("keydown", handleGlobalKeyDown);
+  //     };
+  //   }
+  // }, []);
 
   return (
     <form
       ref={formRef}
       className={cn(
-        `flex flex-col bg-background rounded-2xl`,
+        `flex flex-col bg-background rounded-xl`,
         files.length > 0 ? "border pb-1 px-1.5" : "",
         className,
       )}
@@ -388,7 +388,7 @@ export function PromptInput({
             return (
               <HoverCard key={file.id}>
                 <HoverCardTrigger asChild>
-                  <div className="group relative flex p-2 rounded-2xl cursor-pointer select-none items-center gap-1.5 rounded-2x border border-border font-medium text-sm transition-all hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50">
+                  <div className="group relative flex p-2 rounded-sm cursor-pointer select-none items-center gap-1.5 border border-border font-medium text-sm transition-all hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50">
                     <div className="relative size-5 shrink-0">
                       <div className="absolute inset-0 flex size-5 items-center justify-center overflow-hidden rounded bg-background transition-opacity group-hover:opacity-0">
                         {isImage ? (
@@ -449,7 +449,7 @@ export function PromptInput({
           })}
         </div>
       )}
-      <div className="border rounded-2xl py-1 px-1.5">
+      <div className="border rounded-xl py-1 px-1.5">
         {/* Textarea */}
         <Textarea
           id="textarea"
@@ -501,7 +501,7 @@ export function PromptInput({
             )}
 
             {/* Voice button */}
-            <Button
+            {/*<Button
               type="button"
               className={cn(
                 "transition-all duration-200 bg-muted text-foreground hover:bg-muted/50",
@@ -512,7 +512,7 @@ export function PromptInput({
               onClick={toggleListening}
             >
               <MicrophoneIcon className="size-4" />
-            </Button>
+            </Button> */}
 
             {model.toolSupport === true ? (
               <div className="flex items-center gap-1">

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 // --- Components ---
 
@@ -39,44 +40,44 @@ export const FadeIn = ({
 // --- Sections ---
 
 const PoweredBy = () => {
-const stack = [
+  const stack = [
     {
-        name: "React 19",
-        icon: "./assets/icons/react.svg",
-        link: "https://react.dev",
+      name: "React 19",
+      icon: "./assets/icons/react.svg",
+      link: "https://react.dev",
     },
     {
-        name: "TanStack Start",
-        icon: "./assets/icons/tanstack.svg",
-        link: "https://tanstack.com/start",
+      name: "TanStack Start",
+      icon: "./assets/icons/tanstack.svg",
+      link: "https://tanstack.com/start",
     },
     {
-        name: "Tailwind CSS",
-        icon: "./assets/icons/tailwindcss.svg",
-        link: "https://tailwindcss.com",
+      name: "Tailwind CSS",
+      icon: "./assets/icons/tailwindcss.svg",
+      link: "https://tailwindcss.com",
     },
     {
-        name: "ShadcnUI",
-        icon: "./assets/icons/shadcn.svg",
-        link: "https://ui.shadcn.com",
+      name: "ShadcnUI",
+      icon: "./assets/icons/shadcn.svg",
+      link: "https://ui.shadcn.com",
     },
     {
-        name: "Vercel AI SDK",
-        icon: "./assets/icons/vercel.svg",
-        link: "https://sdk.vercel.ai",
+      name: "Vercel AI SDK",
+      icon: "./assets/icons/vercel.svg",
+      link: "https://sdk.vercel.ai",
     },
     {
-        name: "OpenAlex",
-        icon: "./assets/icons/openalex.svg",
-        link: "https://openalex.org",
+      name: "OpenAlex",
+      icon: "./assets/icons/openalex.svg",
+      link: "https://openalex.org",
     },
-];
+  ];
 
   return (
-    <section className="py-10 border-y border-muted/30 bg-muted/5 overflow-hidden">
+    <section className="py-10 bg-transparent overflow-hidden">
       <div className="container mx-auto px-6 mb-6 text-center">
         <FadeIn delay={0.2}>
-          <span className="text-sm font-medium text-muted-foreground/60 uppercase tracking-widest">
+          <span className="text-sm font-semibold text-muted-foreground/60 uppercase tracking-widest">
             Possible by
           </span>
         </FadeIn>
@@ -120,23 +121,33 @@ const stack = [
 const Hero = () => {
   return (
     <section className="relative flex min-h-[90vh] flex-col items-center justify-center overflow-hidden px-6 pb-10 pt-20 text-center md:pt-32">
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_var(--color-primary)_0%,_transparent_70%)] opacity-[0.03] dark:opacity-[0.08]" />
-
+      {/*<div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_var(--color-primary)_0%,_transparent_70%)] opacity-[0.03] dark:opacity-[0.08]" />*/}
+      {/*<div className="relative flex h-[50rem] w-full items-center justify-center bg-white dark:bg-black">*/}
+      <div
+        className={cn(
+          "absolute inset-0",
+          "[background-size:40px_40px]",
+          "[background-image:linear-gradient(to_right,#e4e4e7_1px,transparent_1px),linear-gradient(to_bottom,#e4e4e7_1px,transparent_1px)]",
+          "dark:[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]",
+        )}
+      />
+      {/* Radial gradient for the container to give a faded look */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
       <FadeIn>
-        <div className="mb-6 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary backdrop-blur-sm">
+        <div className="mb-6 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-foreground backdrop-blur-sm">
           <span>Now indexing 474M+ academic works</span>
         </div>
       </FadeIn>
 
       <FadeIn delay={0.1}>
-        <h1 className="mx-auto max-w-4xl text-5xl font-medium !leading-[1.1] tracking-tight text-foreground md:text-7xl">
+        <h1 className="relative mx-auto max-w-4xl text-5xl font-medium !leading-[1.1] tracking-tight text-foreground md:text-7xl">
           Research deeper, <br />
           <span className="text-muted-foreground">faster than ever.</span>
         </h1>
       </FadeIn>
 
       <FadeIn delay={0.2}>
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
+        <p className="relative mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
           Element AI unifies deep web search and academic databases into a
           single, intelligent interface. Stop switching tabs—start synthesizing
           information.
@@ -145,9 +156,9 @@ const Hero = () => {
 
       <FadeIn
         delay={0.3}
-        className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
+        className="relative mt-10 flex flex-col items-center gap-4 sm:flex-row"
       >
-        <Button asChild size="lg" className="h-12 rounded-full px-8 text-base">
+        <Button asChild size="lg" className="h-10 rounded-full px-8 text-base">
           <Link to="/chat">
             Try Now <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
@@ -156,7 +167,7 @@ const Hero = () => {
           Free for basic queries
         </span>
       </FadeIn>
-
+      {/*</div>*/}
       {/* <FadeIn delay={0.4} className="mt-16 sm:mt-24">
         <div className="flex flex-col items-center gap-2 text-sm text-muted-foreground/60">
           <div className="flex -space-x-2">
@@ -519,7 +530,7 @@ const Footer = () => (
 export const LandingPage = () => {
   return (
     <main className="min-h-screen bg-background font-sans text-foreground selection:bg-primary/20">
-      <nav className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+      <nav className="fixed top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md ">
         <div className="container flex h-14 items-center justify-between px-6 mx-auto">
           <div className="flex items-center gap-2">
             <Image

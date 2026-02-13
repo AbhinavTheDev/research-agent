@@ -10,6 +10,15 @@ export type ModelProps = {
 
 export const models = [
   {
+    id: "sarvam-m",
+    name: "Sarvam M",
+    chef: "Sarvam",
+    chefSlug: "sarvam",
+    providers: ["sarvam"],
+    toolSupport: false,
+    imageSupport: false,
+  },
+  {
     id: "gemini-2.5-flash",
     name: "Gemini 2.5 Flash",
     chef: "Google",
@@ -26,7 +35,6 @@ export const models = [
     providers: ["google"],
     toolSupport: true,
     imageSupport: true,
-
   },
   {
     id: "gemini-2.5-pro",
@@ -108,4 +116,4 @@ export const models = [
   //   toolSupport: false,
   //   imageSupport: false,
   // },
-]
+];
