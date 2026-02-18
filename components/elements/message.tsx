@@ -27,6 +27,7 @@ import {
 } from "react";
 import { Image } from "@unpic/react";
 import { StreamingLiteDown } from "../Litedown/Streamlitedown.tsx";
+import { useTheme } from "@/utils/theme-provider.tsx";
 
 export type MessageProps = HTMLAttributes<HTMLDivElement> & {
   from: UIMessage["role"];
@@ -323,18 +324,21 @@ export const MessageResponse = memo(
   }) => {
     // Use a unique key based on content length to force re-render during streaming
     // const streamKey = `stream-${children?.length || 0}`;
-
+    const { theme, setTheme } = useTheme();
     return (
       <div
         // key={streamKey}
         className={cn(
-          "size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
+          "size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 backdrop-blur-[2px] p-0.5",
           className,
         )}
       >
         <StreamingLiteDown
           content={children}
           isStreaming={status === "streaming" ? true : false}
+          config={{
+            theme: theme
+          }}
         />
       </div>
     );

@@ -73,11 +73,11 @@ export const models = [
   //   imageSupport: false,
   // },
   // {
-  //   id: "openai/gpt-oss-120b",
+  //   id: "gpt-oss-120b",
   //   name: "GPT OSS 120B",
   //   chef: "OpenAI",
   //   chefSlug: "openai",
-  //   providers: ["groq"],
+  //   providers: ["cerebras"],
   //   toolSupport: true,
   //   imageSupport: false,
   // },
@@ -116,4 +116,13 @@ export const models = [
   //   toolSupport: false,
   //   imageSupport: false,
   // },
+  {
+    id: "@cf/zai-org/glm-4.7-flash",
+    name: "GLM 4.7 Flash",
+    chef: "ZAI",
+    chefSlug: "zai",
+    providers: ["worker"],
+    toolSupport: true,
+    imageSupport: false,
+  },
 ];

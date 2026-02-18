@@ -39,17 +39,11 @@ export class SarvamError extends Error {
 
 // ============== Helpers ==============
 
-function getApiKey(explicit?: string): string {
-  const key = explicit ?? process.env.SARVAM_API_KEY;
-  if (!key) throw new SarvamError(401, "SARVAM_API_KEY required");
-  return key;
-}
-
 export function toSarvamMessages(messages: UIMessage[]): SarvamMessage[] {
   return messages
-    .filter((m) => ['user', 'assistant', 'system'].includes(m.role))
+    .filter((m) => ["user", "assistant", "system"].includes(m.role))
     .map((m) => ({
-      role: m.role as SarvamMessage['role'],
+      role: m.role as SarvamMessage["role"],
       content: extractContent(m),
     }))
     .filter((m) => m.content.length > 0);
@@ -57,31 +51,35 @@ export function toSarvamMessages(messages: UIMessage[]): SarvamMessage[] {
 
 function extractContent(message: UIMessage): string {
   // Handle parts array (new UIMessage format)
-  if ('parts' in message && Array.isArray(message.parts)) {
+  if ("parts" in message && Array.isArray(message.parts)) {
     return message.parts
-      .filter((p): p is { type: 'text'; text: string } => 
-        p.type === 'text' && typeof p.text === 'string'
+      .filter(
+        (p): p is { type: "text"; text: string } =>
+          p.type === "text" && typeof p.text === "string",
       )
       .map((p) => p.text)
-      .join('\n');
+      .join("\n");
   }
 
   // Handle legacy content string
-  if ('content' in message) {
+  if ("content" in message) {
     const content = message.content;
-    if (typeof content === 'string') return content;
-    
+    if (typeof content === "string") return content;
+
     if (Array.isArray(content)) {
       return content
-        .filter((p): p is { type: 'text'; text: string } =>
-          typeof p === 'object' && p?.type === 'text' && typeof p?.text === 'string'
+        .filter(
+          (p): p is { type: "text"; text: string } =>
+            typeof p === "object" &&
+            p?.type === "text" &&
+            typeof p?.text === "string",
         )
         .map((p) => p.text)
-        .join('\n');
+        .join("\n");
     }
   }
 
-  return '';
+  return "";
 }
 
 export function withSystemPrompt(
@@ -95,15 +93,16 @@ export function withSystemPrompt(
 // ============== Stream Implementation ==============
 
 /**
- * Creates AI SDK compatible streaming response using official createUIMessageStream
+ * Creates AI SDK compatible streaming response using official createUIMessageStream wrapped in CF AI Gateway
  */
 export async function streamSarvamChat(
   params: SarvamChatParams,
   config?: SarvamConfig,
   originalMessages?: UIMessage[],
 ): Promise<Response> {
-  const apiKey = getApiKey(config?.apiKey);
-  const baseUrl = config?.baseUrl ?? "https://api.sarvam.ai";
+  const baseUrl =
+    config?.baseUrl ??
+    `https://gateway.ai.cloudflare.com/v1/${process.env.CF_ACCOUNT_ID}/${process.env.CF_GATEWAY}`;
 
   return createUIMessageStreamResponse({
     stream: createUIMessageStream({
@@ -111,14 +110,14 @@ export async function streamSarvamChat(
 
       async execute({ writer }) {
         // Fetch from Sarvam API
-        const res = await fetch(`${baseUrl}/v1/chat/completions`, {
+        const res = await fetch(`${baseUrl}/compat/chat/completions`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "api-subscription-key": apiKey,
+            "cf-aig-authorization": `Bearer ${process.env.CF_API_KEY}`,
           },
           body: JSON.stringify({
-            model: params.model ?? "sarvam-m",
+            model: params.model ?? "custom-sarvam/sarvam-m",
             ...params,
             stream: true,
           }),
@@ -234,7 +233,7 @@ export async function streamSarvamChat(
           ? error.message
           : "Unknown error occurred";
       },
-      
+
       onFinish({ responseMessage, finishReason }) {
         console.log("[Sarvam] Stream finished", {
           messageId: responseMessage?.id,
@@ -262,17 +261,18 @@ export async function sarvamChat(
     total_tokens: number;
   };
 }> {
-  const apiKey = getApiKey(config?.apiKey);
-  const baseUrl = config?.baseUrl ?? "https://api.sarvam.ai";
+  const baseUrl =
+    config?.baseUrl ??
+    `https://gateway.ai.cloudflare.com/v1/${process.env.CF_ACCOUNT_ID}/${process.env.CF_GATEWAY}/`;
 
-  const res = await fetch(`${baseUrl}/v1/chat/completions`, {
+  const res = await fetch(`${baseUrl}/compact/chat/completions`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "api-subscription-key": apiKey,
+      "cf-aig-authorization": `Bearer ${process.env.CF_API_KEY}`,
     },
     body: JSON.stringify({
-      model: params.model ?? "sarvam-m",
+      model: params.model ?? "custom-sarvam/sarvam-m",
       ...params,
       stream: false,
     }),

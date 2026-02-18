@@ -476,10 +476,10 @@ export function PromptInput({
                     <Paperclip className="size-4" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="ml-8 md:ml-24">
-                  <div className="flex flex-col gap-2 size-fit">
+                <DropdownMenuContent className="ml-8 sm:max-lg:ml-6 lg:ml-24">
+                  <div className="flex flex-col size-full">
                     <Button
-                      className="flex gap-2 size-fit bg-transparent text-foreground hover:bg-muted/40"
+                      className="flex gap-2 bg-transparent text-foreground hover:bg-muted/40"
                       onClick={() => fileInputRef.current?.click()}
                     >
                       <ImagePlusIcon className="size-4" />
@@ -519,7 +519,7 @@ export function PromptInput({
                 {/* Search button */}
                 <Button
                   type="button"
-                  className={`rounded-lg ${search ? "bg-foreground text-background hover:bg-foreground/60" : "bg-muted text-foreground hover:bg-muted/60"}`}
+                  className={`rounded-lg ${search ? "bg-primary text-background hover:bg-foreground/60" : "bg-muted text-foreground hover:bg-muted/60"}`}
                   onClick={() => searchHandler(!search)}
                 >
                   <Globe className="size-4" />
@@ -529,7 +529,7 @@ export function PromptInput({
                 {/* Acad Search button */}
                 <Button
                   type="button"
-                  className={`rounded-lg ${acadSearch ? "bg-foreground text-background hover:bg-foreground/60" : "bg-muted text-foreground hover:bg-muted/60"}`}
+                  className={`rounded-lg ${acadSearch ? "bg-primary text-background hover:bg-foreground/60" : "bg-muted text-foreground hover:bg-muted/60"}`}
                   onClick={() => acadSearchHandler(!acadSearch)}
                 >
                   <GraduationCapIcon className="size-4" />
@@ -612,7 +612,7 @@ export function PromptInput({
                                           height={10}
                                         />
                                       </div>
-                                      <p className="text-xs font-semibold tracking-wide">
+                                      <p className="text-xs font-medium tracking-wide">
                                         {item.name}
                                       </p>
                                     </div>
@@ -752,7 +752,7 @@ export function PromptInput({
               }
               aria-label="Send message"
             >
-              <SendIcon className="size-4" />
+              <SendIcon className="size-4 text-foreground" />
             </Button>
           )}
         </div>

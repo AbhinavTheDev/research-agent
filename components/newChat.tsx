@@ -20,11 +20,13 @@ import { cn } from "@/lib/utils.ts";
 
 export function NewChat({
   className,
+  triggerClass,
   onClick,
   disabled = false,
   hasMessages = false,
 }: {
   className?: string;
+  triggerClass?: string;
   onClick: () => void;
   disabled?: boolean;
   hasMessages?: boolean;
@@ -45,7 +47,8 @@ export function NewChat({
               <DialogTrigger asChild>
                 <Button
                   className={cn(
-                    "group bg-background text-foreground rounded-lg border justify-center items-center gap-2 hover:bg-muted/70 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed",
+                    "group text-foreground rounded-lg justify-center items-center gap-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed",
+                    triggerClass
                   )}
                   onClick={() => {
                     if (hasMessages) {

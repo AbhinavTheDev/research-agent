@@ -9,19 +9,12 @@ import { cloudflare } from "@cloudflare/vite-plugin";
 import { analyzer } from "vite-bundle-analyzer";
 
 export default defineConfig({
-  server: {
-    port: 3000,
-  },
   plugins: [
     tailwindcss(),
     viteTsConfigPaths({
       projects: ["./tsconfig.json"],
     }),
-    tanstackStart({
-      router: {
-        autoCodeSplitting: true,
-      },
-    }),
+    tanstackStart(),
     viteReact(),
     nitro(),
     cloudflare({ viteEnvironment: { name: "ssr" } }),

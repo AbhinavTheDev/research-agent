@@ -1,13 +1,13 @@
-<svg data-logo="logo" xmlns="http://www.w3.org/2000/svg" viewBox="5 15 70 70">
+<svg data-logo="logo" xmlns="http://www.w3.org/2000/svg" viewBox="5 15 70 70" fill="currentColor">
   <g id="Symbol">
 
     <!-- Solid Architectural E -->
     <path
       d="M64 35.5L40 22L16 35.5V64.5L40 78L64 64.5V35.5ZM58 61L40 71.5L22 61V39L40 28.5L58 39V61Z"
-      fill="white" />
-    <path d="M30 42H50V46H30V42Z" fill="white" />
-    <path d="M30 50H45V54H30V50Z" fill="white" />
-    <path d="M30 58H50V62H30V58Z" fill="white" />
+     />
+    <path d="M30 42H50V46H30V42Z" />
+    <path d="M30 50H45V54H30V50Z" />
+    <path d="M30 58H50V62H30V58Z" />
   </g>
   <!-- <g id="logotype" transform="translate(41, 20.5)"></g> -->
 

@@ -422,8 +422,7 @@ const LITEDOWN_STYLES = `
 .litedown h4, .litedown h5, .litedown h6 {
   font-weight: 600;
   line-height: 1.3;
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.5rem;
 }
 .litedown h1:first-child, .litedown h2:first-child,
 .litedown h3:first-child { margin-top: 0; }
@@ -488,7 +487,7 @@ const LITEDOWN_STYLES = `
 .litedown hr {
   border: none;
   border-top: 1px solid;
-  margin: 2em 0;
+  margin: 1em 0;
 }
 
 /* Tables */

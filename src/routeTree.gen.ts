@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as ApiChatRouteImport } from './routes/api.chat'
 
 const ChatRoute = ChatRouteImport.update({
   id: '/chat',

@@ -503,6 +503,10 @@ function parseMarkdown(
         i++;
       }
       i++; // skip closing $$
+      console.log("Raw math block extracted:");
+      console.log(math.substring(0, 200));
+      console.log("Has \\begin?", math.includes("\\begin"));
+      console.log("Has begin?", math.includes("begin"));
       blocks.push({ type: "math", content: math.trim(), key: genKey() });
       continue;
     }

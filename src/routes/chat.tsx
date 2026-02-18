@@ -10,6 +10,7 @@ import { chatStore, useChatStore } from "@/utils/store.ts";
 // import { DottedGlowBackground } from "@/components/motion/dotted-glow-background";
 import { cn } from "@/lib/utils";
 import { FadeIn } from "@/pages/Landing";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export const Route = createFileRoute("/chat")({
   component: Chat,
@@ -49,7 +50,7 @@ function Chat() {
   return (
     <div className="relative h-[93vh] md:h-screen bg-background text-foreground overflow-hidden">
       <div className="relative flex h-full max-w-full flex-col px-2 py-2">
-        <main className="relative backdrop-panel flex-1 w-full overflow-hidden rounded-2xl border border-border">
+        <main className="relative backdrop-panel flex-1 w-full overflow-hidden rounded-xl border border-border">
           {/* <div className="absolute w-full h-lg">
             <GridMotion
               items={customIcons}
@@ -59,13 +60,20 @@ function Chat() {
               webSearch={webSearch}
             />
           </div> */}
-          <header className="absolute top-2 left-2 z-50">
-            <NewChat
-              className="md:w-auto w-12 h-12 z-80"
-              onClick={handleNewChat}
-              disabled={status === "streaming"}
-              hasMessages={messages.length > 0}
-            />
+          <header className="absolute h-9 top-2 bg-background ring-1 ring-border rounded-md left-2 z-90">
+            <div className="flex items-center">
+              <NewChat
+                className="md:w-auto w-10 h-12"
+                triggerClass="bg-transparent rounded-sm hover:bg-primary/20"
+                onClick={handleNewChat}
+                disabled={status === "streaming"}
+                hasMessages={messages.length > 0}
+              />
+              <hr className="w-px h-7 mb-3 bg-foreground rounded-full" />
+              <div className="h-12 pt-0.5 pr-1 pl-1">
+                <ModeToggle className="size-8" />
+              </div>
+            </div>
           </header>
           <FadeIn delay={0.2}>
             <ChatPage

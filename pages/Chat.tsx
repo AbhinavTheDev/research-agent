@@ -44,6 +44,7 @@ import {
 } from "@/components/elements/reasoning.tsx";
 import { TextLoopLoader } from "@/components/elements/loader.tsx";
 import { useChatStore } from "@/utils/store.ts";
+import { useMockChat } from "@/test/mockChat";
 
 const SourcesSidebar = lazy(() =>
   import("@/components/elements/search-process.tsx").then((module) => ({
@@ -92,6 +93,7 @@ const ChatPage = memo(function Chat({
     setTimeout(() => setCopiedMessageId(null), 2000); 
   };
 
+  const mockChat = useMockChat();
   const realChat = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chat",
@@ -252,7 +254,7 @@ const ChatPage = memo(function Chat({
                                   key={`${message.id}-${i}`}
                                   status={status}
                                   className={cn(
-                                    "whitespace-pre-wrap wrap-break-word",
+                                    "whitespace-pre-wrap wrap-break-word backdrop-blur-sm",
                                   )}
                                 >
                                   {part.text}
